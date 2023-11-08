@@ -124,7 +124,7 @@ const Home = ({ navigation }: any) => {
           </TouchableOpacity>
 
           <View style={styles.meteoriteContainer}>
-            <TouchableOpacity style={styles.containerNewStory} onPress={() => navigation.push("Settings")}>
+            <TouchableOpacity style={styles.containerNewStory} onPress={() => navigation.push("NewStory")}>
               <Image
                 style={styles.livre}
                 source={require('../../../assets/images/livre.png')}
