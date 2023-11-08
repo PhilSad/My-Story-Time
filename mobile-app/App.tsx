@@ -1,17 +1,27 @@
+import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { ImageBackground, SafeAreaView, StyleSheet } from 'react-native';
+import { ImageBackground, View, StyleSheet } from 'react-native';
 import Home from './src/pages/home/home';
+import Settings from './src/pages/settings/settings';
 
-const image = './src/assets/images/background.jpeg';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const image = './assets/images/background.jpeg';
 
 function App(): JSX.Element {
+  const Stack = createNativeStackNavigator();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ImageBackground source={require(image)} resizeMode="cover" style={styles.image}>
-        <Home />
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Settings" component={Settings} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </ImageBackground>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -21,7 +31,6 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    justifyContent: 'center',
   },
 });
 export default App;

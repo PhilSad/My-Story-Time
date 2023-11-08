@@ -12,6 +12,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		19E365263BB44C0E8416FFD2 /* Agbalumo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E0960317A4B4322A244EBAF /* Agbalumo.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-MyStoryTime-MyStoryTimeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-MyStoryTime-MyStoryTimeTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -41,6 +42,7 @@
 		5709B34CF0A7D63546082F79 /* Pods-MyStoryTime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyStoryTime.release.xcconfig"; path = "Target Support Files/Pods-MyStoryTime/Pods-MyStoryTime.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-MyStoryTime-MyStoryTimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyStoryTime-MyStoryTimeTests.debug.xcconfig"; path = "Target Support Files/Pods-MyStoryTime-MyStoryTimeTests/Pods-MyStoryTime-MyStoryTimeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-MyStoryTime.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyStoryTime.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E0960317A4B4322A244EBAF /* Agbalumo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Agbalumo.ttf; path = ../assets/fonts/Agbalumo.ttf; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MyStoryTime/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-MyStoryTime-MyStoryTimeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyStoryTime-MyStoryTimeTests.release.xcconfig"; path = "Target Support Files/Pods-MyStoryTime-MyStoryTimeTests/Pods-MyStoryTime-MyStoryTimeTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -122,6 +124,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				A260575303F64493ACCB48F9 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -135,6 +138,15 @@
 				00E356EE1AD99517003FC87E /* MyStoryTimeTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A260575303F64493ACCB48F9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6E0960317A4B4322A244EBAF /* Agbalumo.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -244,6 +256,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				19E365263BB44C0E8416FFD2 /* Agbalumo.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
