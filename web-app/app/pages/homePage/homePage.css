@@ -1,0 +1,11 @@
+.homePage {
+  min-height: 100vh;
+  background-image: url("../../assets/images/background.jpeg");
+  background-size: cover;
+}
+
+.homePage h1 {
+  font-size: 3em;
+  text-align: center;
+  padding-top: 35px;
+}
