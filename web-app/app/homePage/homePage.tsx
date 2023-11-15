@@ -2,6 +2,7 @@ import React from 'react';
 import "./homePage.css";
 import Image from 'next/image'
 import ButtonMenu from '@/app/components/buttonMenu/buttonMenu';
+import Link from 'next/link';
 
 const HomePage = () => {
   return (
@@ -9,7 +10,7 @@ const HomePage = () => {
       <h1>My Bedtime Story</h1>
 
       <div className='flex'>
-        <div className='flex w-full justify-center'>
+        <Link href="/newStory" className='flex w-full justify-center'>
           <div className='absolute bottom-20 z-10'>
             <ButtonMenu text="Nouvelle histoire" />
           </div>
@@ -29,7 +30,7 @@ const HomePage = () => {
               alt="Picture of the author"
             />
           </div>
-        </div>
+        </Link>
         <div className='flex w-full justify-center'>
           <div className='absolute bottom-20 z-10'>
             <ButtonMenu text="Histoires enregistrées" />
