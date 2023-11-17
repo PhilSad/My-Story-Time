@@ -1,9 +1,12 @@
-import HomePage from '@/app/pages/homePage/homePage';
+import HomePage from '@/app/homePage/homePage';
 
 export default function Home() {
   return (
     <main>
-      <HomePage />
+      <div className="homePage relative overflow-hidden">
+        <HomePage />
+      </div>
+
     </main>
   )
 }
