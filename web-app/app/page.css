@@ -1,0 +1,6 @@
+.home {
+  min-height: 100vh;
+  background-image: url("./assets/images/background.jpeg");
+  background-size: cover;
+  overflow: hidden;
+}
