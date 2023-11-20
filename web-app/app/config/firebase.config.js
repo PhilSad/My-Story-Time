@@ -24,6 +24,4 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const googleProvider = new GoogleAuthProvider();
 export const db = getFirestore(app);
-const functions = getFunctions(getApp());
-connectFunctionsEmulator(functions, "127.0.0.1", 5001);
 
