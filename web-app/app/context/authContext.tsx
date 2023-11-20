@@ -9,6 +9,7 @@ import {
   signInAnonymously
 } from "firebase/auth";
 import { auth } from "../config/firebase.config";
+import { addDoc } from 'firebase/firestore';
 const AuthContext = createContext<any>({});
 
 export const AuthContextProvider = ({ children }: any) => {
@@ -17,7 +18,8 @@ export const AuthContextProvider = ({ children }: any) => {
 
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    const resp = await signInWithPopup(auth, provider);
+    
   };
 
   const anonymouslySignIn = async () => {
