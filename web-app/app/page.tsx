@@ -1,12 +1,14 @@
-import HomePage from '@/app/homePage/homePage';
+import Header from '@/app/components/header/header';
+import HomePage from '@/app/homePage/page';
+import "./page.css";
 
 export default function Home() {
   return (
     <main>
-      <div className="homePage relative overflow-hidden">
+      <div className="relative home">
+        <Header />
         <HomePage />
       </div>
-
     </main>
   )
 }

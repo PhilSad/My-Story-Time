@@ -1,0 +1,28 @@
+.bubble {
+  width: 40%;
+  min-width: 200px;
+  background: white;
+  display: block;
+  margin: 0 auto;
+  border-radius: 20px;
+  margin-top: 50px;
+  text-align: center;
+  color: black;
+}
+
+.textBubble {
+  padding: 30px;
+  font-size: 1.5em;
+}
+
+.pointer {
+  height: 40px;
+  width: 40px;
+  background: white;
+  margin: 0 auto;
+  transform: rotate(45deg);
+  border-radius: 0 0 12px 0;
+  margin-top: -22px;
+  position: relative;
+  right: calc(0.5vw - 90px);
+}
