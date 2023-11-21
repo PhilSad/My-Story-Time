@@ -111,12 +111,15 @@ def generate_story_with_images_desc(language, story_idea, hero_name):
 
 if __name__ == "__main__":
     import argparse
+    import json
     
     parser = argparse.ArgumentParser(description='Generate a story')
     parser.add_argument('--language', type=str, default="fr", help='Language of the story')
     parser.add_argument('--story_idea', type=str, default="Un enfant découvre un monde magique", help='Story idea')
     parser.add_argument('--hero_name', type=str, default="Léo", help='Name of the hero')
+    parser.add_argument('--output', type=str, default="story.json", help='Output file')
     
     args = parser.parse_args()
     story = generate_story_with_images_desc(args.language, args.story_idea, args.hero_name)
-    print(story)
+    with open(args.output, 'w') as f:
+        json.dump(story, f, indent=4, ensure_ascii=False)
