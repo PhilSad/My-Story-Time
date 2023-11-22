@@ -3,43 +3,24 @@ import openai
 import re
 dotenv.load_dotenv('.env')
 
-instructions_fr = """
-Consignes:
-Un chapitre doit être court et se terminer par un cliffhanger.
-Un Chapitre est divisé en plusieurs court paragraphes.
-Un paragraphes contient Deux phrases au maximum."""
-
-instructions_en = """
+instructions = """
 Instructions:
-A chapter must be short and end with a cliffhanger.
-A chapter is divided into several short paragraphs.
-A paragraph contains a maximum of two sentences."""
+A chapter must be short and end with a cliffhanger."""
 
 imagen_instructions = """-----
 Write a very short one sentence visual description of the scene. Include a very short description of the character and its environnement. Keep it short and simple."""
 
-def generate_prompt(language, story_idea, hero_name, instructions):
-    if language == "fr":
-        prompt = f"""Ecris une histoire pour enfant composée de 5 chapitres.
-{story_idea}
-Personnage principal: {hero_name}
-{instructions}
-"""
-    if language == "en":
-        prompt = f"""Write a children's story composed of 5 chapters.
+def generate_prompt(story_idea, hero_name, instructions):
+
+    prompt = f"""Write a children's story composed of 5 chapters.
 {story_idea}
 Main character: {hero_name}
 {instructions}
 """
     return prompt
 
-def generate_story(language, story_idea, hero_name):
-    if language == "fr":
-        instructions = instructions_fr
-    if language == "en":
-        instructions = instructions_en
-         
-    prompt = generate_prompt(language, story_idea, hero_name, instructions)
+def generate_story(story_idea, hero_name):
+    prompt = generate_prompt(story_idea, hero_name, instructions)
     response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[{"role":"user", "content": prompt}]
@@ -50,7 +31,7 @@ def generate_story(language, story_idea, hero_name):
 def split_raw_story(story):
 
     # split story into chapters
-    pattern = r"(Chapitre \d+: [^\n]+)\n\n(.*?)(?=\n\nChapitre|$)"
+    pattern = r"(Chapter \d+: [^\n]+)\n\n(.*?)(?=\n\nChapter|$)"
 
     # Find all matches
     story_by_chapters = re.findall(pattern, story, re.DOTALL)
@@ -102,16 +83,44 @@ def add_image_desc(splitted_story):
         story_with_images_desc.append(chapter_item)
     return story_with_images_desc
 
+def translate_text(text, language):
+    response = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role":"user", "content": f"""Translate the following text into {language}:
+{text}"""}
+                  ],
+    )
+    translation = response.choices[0].message.content
+    return translation
+
+def translate_whole_story(story, language):
+    for chapter in story:
+        for paragraph in chapter['paragraphs']:
+            paragraph['text'] = translate_text(paragraph['text'], language)
+            paragraph['image_desc'] = translate_text(paragraph['image_desc'], language)
+    return story
+ 
 
 def generate_story_with_images_desc(language, story_idea, hero_name):
-    story = generate_story(language, story_idea, hero_name)
+    if language != 'en':
+        story_idea = translate_text(story_idea, "en")
+    print(story_idea)
+        
+    story = generate_story(story_idea, hero_name)
+    print(story)
     splitted_story = split_raw_story(story)
     story_with_images_desc = add_image_desc(splitted_story)
+    
+    if language != 'en':
+        print("Translating the story into", language)
+        story_with_images_desc = translate_whole_story(story_with_images_desc, language)
+
     return story_with_images_desc
 
 if __name__ == "__main__":
     import argparse
     import json
+    import time
     
     parser = argparse.ArgumentParser(description='Generate a story')
     parser.add_argument('--language', type=str, default="fr", help='Language of the story')
@@ -120,6 +129,12 @@ if __name__ == "__main__":
     parser.add_argument('--output', type=str, default="story.json", help='Output file')
     
     args = parser.parse_args()
+    
+    t1 = time.time()
+    
     story = generate_story_with_images_desc(args.language, args.story_idea, args.hero_name)
     with open(args.output, 'w') as f:
         json.dump(story, f, indent=4, ensure_ascii=False)
+    
+    t2 = time.time()
+    print("Story generated in", t2 - t1, "seconds")
