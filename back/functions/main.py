@@ -1,11 +1,13 @@
 from firebase_functions import firestore_fn
 from firebase_functions.firestore_fn import Event, DocumentSnapshot
 from firebase_admin import initialize_app, firestore
-from gen_story import generate_story_with_images_desc
+
+from mystorytime import generate_whole_story
+
+import dotenv
+dotenv.load_dotenv('.env')
 
 initialize_app()
-
-
 
 def add_dummy_image_to_story(story):
     for chapter in story:
@@ -32,7 +34,7 @@ def function_generate_story(event: Event[DocumentSnapshot]):
     db.collection("Users").document(user_id).collection("Stories").document(story_id) \
         .update(dict(status="generating"))
     
-    story_with_images_desc = generate_story_with_images_desc(language, story_idea, hero_name)
+    story_with_images_desc = generate_whole_story(language, story_idea, hero_name)
     
     story_with_images_links = add_dummy_image_to_story(story_with_images_desc)
     
