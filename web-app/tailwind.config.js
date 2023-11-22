@@ -9,7 +9,14 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'night': "url('./assets/images/background.jpeg')",
+      }
+    },
+    fontFamily: {
+      'agbalumo': 'Agbalumo',
+    }
   },
   plugins: [require("daisyui")],
   daisyui: {

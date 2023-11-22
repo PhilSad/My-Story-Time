@@ -5,26 +5,30 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useStore } from '@/app/store/root.store';
 import { observer } from 'mobx-react-lite';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 const Page = observer(() => {
-  const { storyStore } = useStore();
-  console.log("store",storyStore.story.prompt);
-  const [promptInput, setInputPrompt] = useState(storyStore.story.prompt);
+
   const router = useRouter()
+  const { storyStore } = useStore();
   const updatePrompt = () => {
-    storyStore.setPromptStory(promptInput);
-    router.push("/newStoryImage");
     //storyStore.createNewStroy(null);
   }
   return (
     <div className="flex flex-row min-h-screen bg-cover bg-night font-agbalumo">
       <div className='container flex grid flex-col content-center mx-48 space-y-10 basis-3/4'>
-        <div className='text-3xl'>Que raconte l’histoire ?</div>
-        <input type="text" value={promptInput} placeholder="Un pirate a perdu son pérroquet.." className="w-full input input-bordered" onChange={(e) => setInputPrompt(e.target.value)} />
+        <div className='text-3xl'>Ajoute des photos</div>
+        <div className="w-48 h-48 shadow-xl btn card bg-base-100">
+          <div className="flex items-center">
+            <FontAwesomeIcon icon={faPlus} size="2xl"/>
+          </div>
+        </div>
         <div className='flex justify-between'>
-          <div className='btn' onClick={() => router.push('/')}>Annuler</div>
+          <div className='btn' onClick={() => router.push('/newStory')}>Annuler</div>
           <div className='btn' onClick={updatePrompt}>Valider</div>
+          <div>{storyStore.story.prompt}</div>
         </div>
 
       </div>
