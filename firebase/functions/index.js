@@ -14,7 +14,8 @@ exports.createUser = functions.auth.user().onCreate(async (user) => {
   const {uid, email, displayName} = user;
   await getFirestore()
       .collection("Users")
-      .add({
+      .doc(uid)
+      .set({
         uid,
         email,
         displayName,
@@ -23,16 +24,17 @@ exports.createUser = functions.auth.user().onCreate(async (user) => {
 
 exports.createNewStroy = onCall(async (request) => {
   const uidUser = request.auth.uid;
-  const prompt = request.data.prompt;
-  const urlImage = request.data.urlImage || null;
+  const {prompt, urlImage, heroName, language} = request.data;
 
   const writeResult = await getFirestore()
       .collection("Users")
       .doc(uidUser)
       .collection("Stories")
       .add({
-        prompt: prompt,
+        story_idea: prompt,
         urlImage: urlImage,
+        hero_name: heroName,
+        language: language,
       });
 
   console.log(`Document written with ID: ${writeResult.id} added.`);

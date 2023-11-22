@@ -4,7 +4,6 @@ import React, { useEffect } from 'react'
 import { UserAuth } from '../../context/authContext'
 import { usePathname } from 'next/navigation'
 
-
 const withAuth = (Component: any) => {
   return function IsAuth(props: any) {
     const pathname = usePathname();
