@@ -29,9 +29,13 @@ def function_generate_story(event: Event[DocumentSnapshot]):
     hero_name = story_data['hero_name']
     language = story_data['language'].lower()
     
+    db.collection("Users").document(user_id).collection("Stories").document(story_id) \
+        .update(dict(status="generating"))
+    
     story_with_images_desc = generate_story_with_images_desc(language, story_idea, hero_name)
     
     story_with_images_links = add_dummy_image_to_story(story_with_images_desc)
     
     db.collection("Users").document(user_id).collection("Stories").document(story_id) \
-        .update(dict(story=story_with_images_links))
+        .update(dict(story=story_with_images_links, status="done"))
+        
