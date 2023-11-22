@@ -105,14 +105,22 @@ def translate_whole_story(story, language):
 def generate_story_with_images_desc(language, story_idea, hero_name):
     if language != 'en':
         story_idea = translate_text(story_idea, "en")
-        
+    print("Story idea:", story_idea)
     story = generate_story(story_idea, hero_name)
+    print("Raw story:")
+    print(story)
     splitted_story = split_raw_story(story)
+    print("Splitted story:")
+    print(splitted_story)
     story_with_images_desc = add_image_desc(splitted_story)
+    print("Story with images description:")
+    print(story_with_images_desc)
     
     if language != 'en':
         print("Translating the story into", language)
         story_with_images_desc = translate_whole_story(story_with_images_desc, language)
+        print("Translated story:")
+        print(story_with_images_desc)
 
     return story_with_images_desc
 
