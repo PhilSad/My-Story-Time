@@ -31,7 +31,7 @@ def generate_story(story_idea, hero_name):
 def split_raw_story(story):
 
     # split story into chapters
-    pattern = r"(Chapter \d+: [^\n]+)\n\n(.*?)(?=\n\nChapter|$)"
+    pattern = r"(Chapter \d+: [^\n]+)(.*?)(?=Chapter|$)"
 
     # Find all matches
     story_by_chapters = re.findall(pattern, story, re.DOTALL)
@@ -89,25 +89,24 @@ def translate_text(text, language):
         messages=[{"role":"user", "content": f"""Translate the following text into {language}:
 {text}"""}
                   ],
+        max_tokens=100
     )
     translation = response.choices[0].message.content
     return translation
 
 def translate_whole_story(story, language):
     for chapter in story:
+        chapter['chapter_title'] = translate_text(chapter['chapter_title'], language)
         for paragraph in chapter['paragraphs']:
             paragraph['text'] = translate_text(paragraph['text'], language)
-            paragraph['image_desc'] = translate_text(paragraph['image_desc'], language)
     return story
  
 
 def generate_story_with_images_desc(language, story_idea, hero_name):
     if language != 'en':
         story_idea = translate_text(story_idea, "en")
-    print(story_idea)
         
     story = generate_story(story_idea, hero_name)
-    print(story)
     splitted_story = split_raw_story(story)
     story_with_images_desc = add_image_desc(splitted_story)
     
