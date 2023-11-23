@@ -49,17 +49,19 @@ def function_generate_story(event: Event[DocumentSnapshot]):
     
     
     request_data = dict(
-        story=story_with_images_desc,
-        user_id=user_id,
-        story_id=story_id,
-        image_url=image_url
+        input=dict(
+            story=story_with_images_desc,
+            user_id=user_id,
+            story_id=story_id,
+            image_url=image_url
+        )
     )
     
     db.collection("Users").document(user_id).collection("Stories").document(story_id) \
         .update(dict(status="done_story"))
     
     call_runpod(RUNPOD_URL, RUNPOD_KEY, request_data)
-        
+    print('>>>>>>>>>>>>>>>>>>>END DEBUG<<<<<<<<<<<<<<<<<<<')
     
 
         
