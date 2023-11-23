@@ -76,7 +76,7 @@ def handler(job):
     for i, chapter in enumerate(story_with_images_desc):
         for j, paragraph in enumerate(chapter['paragraphs']):
             image_name = f"Images/{user_id}/{story_id}/chapter_{i}_paragraph_{j}.jpeg"
-            print('saving image to', image_name')
+            print('saving image to', image_name)
             # save image to buffer
             image_ref = bucket.blob(image_name)
             buffered = BytesIO()
@@ -94,7 +94,7 @@ def handler(job):
             
 
 
-    
+    print('saving to firestore')
     # save story and image links to firestore
     story_ref = firebase_db.collection('Users').document(user_id).collection('Stories').document(story_id)
     story_ref.update({
