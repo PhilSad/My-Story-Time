@@ -6,7 +6,15 @@ from ip_adapter import IPAdapterPlusXL
 from ip_adapter.custom_pipelines import StableDiffusionXLCustomPipeline
 import runpod
 import base64
-import io
+from io import BytesIO
+import firebase_admin
+from firebase_admin import credentials, storage, firestore
+import json
+import dotenv
+import os
+import datetime
+dotenv.load_dotenv()
+
 # !mkdir -p models/image_encoder
 # !wget -P models https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter-plus-face_sdxl_vit-h.bin
 # !wget -O models/image_encoder/pytorch_model.bin https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/pytorch_model.bin
@@ -36,30 +44,65 @@ def add_pictures_to_story(ip_model, story_with_images_desc, image):
         print(f'done with chapter {chapter["chapter_title"]}')
         for paragraph in chapter['paragraphs']:
             image = generate_picture(ip_model, image, paragraph['image_desc'])
-            
-            buffer = io.BytesIO()
-            image.save(buffer, format='PNG')  # You can change PNG to any format you need
-            buffer.seek(0)
-            
-            image_base64 = base64.b64encode(buffer.getvalue())
-            paragraph['image'] = image_base64.decode('utf-8')
+            paragraph['image'] = image
 
     return story_with_images_desc
 
 
 def handler(job):
+    # initialize firebase
+    bucket_id = "mystorytime-e88bd.appspot.com"
+    bucket_name="mystorytime-e88bd.appspot.com"
+    cred = credentials.Certificate(json.loads(os.environ.get("FIREBASE_KEY").replace("\n", "\\n")))
+    firebase_app = firebase_admin.initialize_app(cred, {
+        'storageBucket': bucket_id,
+    }, name=bucket_name)
+    
+    bucket = storage.bucket(name=bucket_name, app=firebase_app)
+    firebase_db = firestore.client(app=firebase_app)
+
+    # get inputs
     job_input = job['input']
     url_image = job_input['image_url']
     story_with_images_desc = job_input['story']
+    user_id = job_input['user_id']
+    story_id = job_input['story_id']
 
     input_image = load_image(url_image)
 
     story_with_images_desc = add_pictures_to_story(ip_model, story_with_images_desc, input_image)
 
+    # save images to firebase storage Images/{user_id}/{story_id}/chapter_i_paragraph_j.png
+    for i, chapter in enumerate(story_with_images_desc):
+        for j, paragraph in enumerate(chapter['paragraphs']):
+            image_name = f"Images/{user_id}/{story_id}/chapter_{i}_paragraph_{j}.jpeg"
+            # save image to buffer
+            image_ref = bucket.blob(image_name)
+            buffered = BytesIO()
+            paragraph['image'].save(buffered, format="JPEG")
+            buffered.seek(0)
+            # upload image to firebase storage
+            img_str = buffered.getvalue()
+            image_ref.upload_from_file(buffered, content_type="image/jpeg")
+            # get download url
+            download_url = image_ref.generate_signed_url(expiration=datetime.timedelta(days=100000))
+            paragraph['image'] = download_url
+
+            
+
+
+    
+    # save story and image links to firestore
+    story_ref = firebase_db.collection('Users').document(user_id).collection('Stories').document(story_id)
+    story_ref.update({
+        'story': story_with_images_desc,
+        'status': 'done'
+    })
+        
     
     return story_with_images_desc
 
-runpod.serverless.start({ "handler": handler}) 
+# runpod.serverless.start({ "handler": handler}) 
     
     
 
