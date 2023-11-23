@@ -10,17 +10,14 @@ ENV PYTHONUNBUFFERED=1
 
 # Install dependencies
 WORKDIR /app
-COPY requirements.txt .
-COPY gen_images.py .
-RUN pip install -r requirements.txt
-# !mkdir -p models/image_encoder
-# !wget -P models https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter-plus-face_sdxl_vit-h.bin
-# !wget -O models/image_encoder/pytorch_model.bin https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/pytorch_model.bin
-# !wget -O models/image_encoder/config.json       https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/config.json
 RUN mkdir -p models/image_encoder && \
     wget -P models https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter-plus-face_sdxl_vit-h.bin && \
     wget -O models/image_encoder/pytorch_model.bin https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/pytorch_model.bin && \
     wget -O models/image_encoder/config.json       https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/config.json && \
     wget -O models/sd_xl_base_1.0.safetensors      https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors
+
+COPY requirements.txt .
+COPY gen_images.py .
+RUN pip install -r requirements.txt
 
 CMD [ "python", "-u", "/app/gen_images.py" ]
