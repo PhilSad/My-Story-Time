@@ -19,7 +19,8 @@ RUN mkdir -p models/image_encoder && \
 
 
 COPY requirements.txt .
-COPY gen_images.py .
 RUN pip install -r requirements.txt
+
+COPY gen_images.py .
 
 CMD [ "python", "-u", "/app/gen_images.py" ]
