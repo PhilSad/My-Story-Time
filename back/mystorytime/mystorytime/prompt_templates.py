@@ -7,9 +7,9 @@ For each panel return: "Panel n:" with n the panel number and the splitted text.
 
 prompt_template_describe = lambda captions: f"""{captions}
     
-You are a well known comic artist, for each panel describe the illustration, with detailled but brief sentences. Dynamic composition is prefered.
+You are a well known comic artist, for each panel describe the illustration, with short and clear sentences.
+Dynamic composition is generally prefered.
 
-Always describe the panel like so, no more than one sentence by category:
 Panel <n>:
 - Character: <description of the character in the scene>
 - Setting: <scene setting>
