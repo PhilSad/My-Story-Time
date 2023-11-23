@@ -17,7 +17,6 @@ pipe = StableDiffusionXLCustomPipeline.from_single_file(
     torch_dtype=torch.float16,
     add_watermarker=False,
 )
-pipe.enable_xformers_memory_efficient_attention()
 
 # load ip-adapter
 ip_model = IPAdapterPlusXL(pipe, "models/image_encoder", 
