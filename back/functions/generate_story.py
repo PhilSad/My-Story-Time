@@ -2,7 +2,7 @@ import argparse
 import json
 import time
 
-from mystorytime import generate_whole_story
+from mystorytime_lib import generate_whole_story
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate a story')

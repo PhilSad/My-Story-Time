@@ -2,7 +2,7 @@ from firebase_functions import firestore_fn
 from firebase_functions.firestore_fn import Event, DocumentSnapshot
 from firebase_admin import initialize_app, firestore
 import requests
-from mystorytime import generate_whole_story
+from mystorytime_lib import generate_whole_story
 
 import dotenv
 import os
