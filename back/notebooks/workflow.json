@@ -1,0 +1,142 @@
+{
+    "1": {
+        "inputs": {
+            "ckpt_name": "sd_xl_base_1.0.safetensors"
+        },
+        "class_type": "CheckpointLoaderSimple"
+    },
+    "3": {
+        "inputs": {
+            "ipadapter_file": "ip-adapter-plus-face_sdxl_vit-h.safetensors"
+        },
+        "class_type": "IPAdapterModelLoader"
+    },
+    "4": {
+        "inputs": {
+            "clip_name": "model.safetensors"
+        },
+        "class_type": "CLIPVisionLoader"
+    },
+    "5": {
+        "inputs": {
+            "weight": 0.5,
+            "weight_type": "linear",
+            "noise": 0.5,
+            "ipadapter": [
+                "3",
+                0
+            ],
+            "clip_vision": [
+                "4",
+                0
+            ],
+            "image": [
+                "19",
+                0
+            ],
+            "model": [
+                "1",
+                0
+            ]
+        },
+        "class_type": "IPAdapterApply"
+    },
+    "7": {
+        "inputs": {
+            "text": "A young sorceress stands before her slumbering village, shrouded in an eerie, malevolent glow that blankets the darkened landscape, with deserted streets echoing with anxious whispers.\n(in a children story style:1.2)",
+            "clip": [
+                "1",
+                1
+            ]
+        },
+        "class_type": "CLIPTextEncode"
+    },
+    "8": {
+        "inputs": {
+            "text": "blur, horror",
+            "clip": [
+                "1",
+                1
+            ]
+        },
+        "class_type": "CLIPTextEncode"
+    },
+    "9": {
+        "inputs": {
+            "seed": 10004,
+            "steps": 50,
+            "cfg": 6,
+            "sampler_name": "euler_ancestral",
+            "scheduler": "sgm_uniform",
+            "denoise": 1,
+            "model": [
+                "5",
+                0
+            ],
+            "positive": [
+                "7",
+                0
+            ],
+            "negative": [
+                "8",
+                0
+            ],
+            "latent_image": [
+                "10",
+                0
+            ]
+        },
+        "class_type": "KSampler"
+    },
+    "10": {
+        "inputs": {
+            "width": 1024,
+            "height": 1024,
+            "batch_size": 1
+        },
+        "class_type": "EmptyLatentImage"
+    },
+    "11": {
+        "inputs": {
+            "samples": [
+                "9",
+                0
+            ],
+            "vae": [
+                "1",
+                2
+            ]
+        },
+        "class_type": "VAEDecode"
+    },
+    "12": {
+        "inputs": {
+            "filename_prefix": "IPAdapter",
+            "images": [
+                "11",
+                0
+            ]
+        },
+        "class_type": "SaveImage"
+    },
+    "19": {
+        "inputs": {
+            "interpolation": "LANCZOS",
+            "crop_position": "center",
+            "sharpening": 1,
+            "image": [
+                "22",
+                0
+            ]
+        },
+        "class_type": "PrepImageForClipVision"
+    },
+    "22": {
+        "inputs": {
+            "image_path": "https://firebasestorage.googleapis.com/v0/b/mystorytime-e88bd.appspot.com/o/test%2Fmy_phil_ip.png?alt=media&token=e60ef995-1dbc-40e1-8de5-dd7b190e6f46",
+            "RGBA": "false",
+            "filename_text_extension": "true"
+        },
+        "class_type": "Image Load"
+    }
+}
