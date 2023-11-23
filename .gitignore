@@ -1,2 +1,3 @@
 .env
 back/functions/venv
+back/notebooks/comfyui_api.ipynb
