@@ -5,3 +5,4 @@ einops
 git+https://github.com/tencent-ailab/IP-Adapter.git
 omegaconf
 runpod
+firebase_admin
