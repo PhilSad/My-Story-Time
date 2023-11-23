@@ -55,6 +55,8 @@ def handler(job):
     bucket_name="mystorytime-e88bd.appspot.com"
     print('-------------------------------------')
     print('FIREBASE_KEY', os.environ["FIREBASE_KEY"].replace("\n", "\\n"))
+    print('FIREBASE_DICT')
+    print(json.loads(os.environ.get("FIREBASE_KEY").replace("\n", "\\n")))
     print('-------------------------------------')
     cred = credentials.Certificate(json.loads(os.environ.get("FIREBASE_KEY").replace("\n", "\\n")))
     firebase_app = firebase_admin.initialize_app(cred, {
