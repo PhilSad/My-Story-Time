@@ -3,5 +3,5 @@ accelerate
 transformers 
 einops 
 git+https://github.com/tencent-ailab/IP-Adapter.git
-xformers
 omegaconf
+runpod
