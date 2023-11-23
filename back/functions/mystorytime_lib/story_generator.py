@@ -19,7 +19,7 @@ def generate_whole_story(language, story_idea, hero_name):
     
     print("Story idea:", story_idea)
     story = LLM_write_story(story_idea, hero_name)
-
+    print("Story:", story)
     pattern = r"(Chapter [^:]+):(.*?)(?=\nChapter|$)"
     chapter_title_and_text = re.findall(pattern, story, re.DOTALL)
 
