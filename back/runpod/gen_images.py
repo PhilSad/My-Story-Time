@@ -105,7 +105,7 @@ def handler(job):
     
     return story_with_images_desc
 
-# runpod.serverless.start({ "handler": handler}) 
+runpod.serverless.start({ "handler": handler}) 
     
     
 
