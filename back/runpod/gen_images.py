@@ -76,6 +76,7 @@ def handler(job):
     for i, chapter in enumerate(story_with_images_desc):
         for j, paragraph in enumerate(chapter['paragraphs']):
             image_name = f"Images/{user_id}/{story_id}/chapter_{i}_paragraph_{j}.jpeg"
+            print('saving image to', image_name')
             # save image to buffer
             image_ref = bucket.blob(image_name)
             buffered = BytesIO()
@@ -87,6 +88,8 @@ def handler(job):
             # get download url
             download_url = image_ref.generate_signed_url(expiration=datetime.timedelta(days=100000))
             paragraph['image'] = download_url
+            print('done saving image to', image_name)
+            print(paragraph)
 
             
 
