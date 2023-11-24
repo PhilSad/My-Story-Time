@@ -2,15 +2,16 @@ import re
 
 from .prompt_templates import prompt_template_writestory
 from .LLM_queries import LLM_translate_text, LLM_write_story, LLM_split_and_describe
+import logging
 
 # translates every part of the story, chapter_title and text
 def translate_whole_story(story, language):
     for chapter in story:
+        logging.debug("Translating chapter", chapter['chapter_title'])
         chapter['chapter_title'] = LLM_translate_text(chapter['chapter_title'], language)
         for paragraph in chapter['paragraphs']:
             paragraph['text'] = LLM_translate_text(paragraph['text'], language)
         
-        print("Translated chapter:", chapter)
     return story
 
 
