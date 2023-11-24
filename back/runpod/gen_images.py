@@ -15,10 +15,19 @@ import os
 import datetime
 dotenv.load_dotenv()
 
-# !mkdir -p models/image_encoder
-# !wget -P models https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter-plus-face_sdxl_vit-h.bin
-# !wget -O models/image_encoder/pytorch_model.bin https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/pytorch_model.bin
-# !wget -O models/image_encoder/config.json       https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/config.json
+
+# initialize firebase
+bucket_id = "mystorytime-e88bd.appspot.com"
+bucket_name="mystorytime-e88bd.appspot.com"
+cred = credentials.Certificate(json.loads(os.environ.get("FIREBASE_KEY").replace("\n", "\\n")))
+firebase_app = firebase_admin.initialize_app(cred, {
+    'storageBucket': bucket_id,
+}, name=bucket_name)
+
+bucket = storage.bucket(name=bucket_name, app=firebase_app)
+firebase_db = firestore.client(app=firebase_app)
+
+
 
 pipe = StableDiffusionXLCustomPipeline.from_single_file(
     "./models/sd_xl_base_1.0.safetensors",
@@ -50,17 +59,6 @@ def add_pictures_to_story(ip_model, story_with_images_desc, image):
 
 
 def handler(job):
-    # initialize firebase
-    bucket_id = "mystorytime-e88bd.appspot.com"
-    bucket_name="mystorytime-e88bd.appspot.com"
-    cred = credentials.Certificate(json.loads(os.environ.get("FIREBASE_KEY").replace("\n", "\\n")))
-    firebase_app = firebase_admin.initialize_app(cred, {
-        'storageBucket': bucket_id,
-    }, name=bucket_name)
-    
-    bucket = storage.bucket(name=bucket_name, app=firebase_app)
-    firebase_db = firestore.client(app=firebase_app)
-
     # get inputs
     job_input = job['input']
     url_image = job_input['image_url']
