@@ -14,7 +14,7 @@ def translate_whole_story(story, language):
 
 # generate the whole story dict, with image description
 def generate_whole_story(language, story_idea, hero_name):
-    if language != 'english':
+    if language != 'en':
         story_idea = LLM_translate_text(story_idea, "english")
     
     print("Story idea:", story_idea)
@@ -33,7 +33,7 @@ def generate_whole_story(language, story_idea, hero_name):
         whole_story.append(whole_chapter)
 
 
-    if language != 'english':
+    if language != 'en':
         print("Translating the story into", language)
         whole_story = translate_whole_story(whole_story, language)
         print("Translated story:")
