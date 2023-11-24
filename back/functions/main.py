@@ -63,7 +63,7 @@ def function_generate_story(event: Event[DocumentSnapshot]):
     t2 = time.time()
     
     db.collection("Users").document(user_id).collection("Stories").document(story_id) \
-        .update(dict(status="done_story", timeçto_generate_story=t2 - t1))
+        .update(dict(status="done_story", time_to_generate_story=int(t2 - t1) ))
     
     call_runpod(RUNPOD_URL, RUNPOD_KEY, request_data)
     
