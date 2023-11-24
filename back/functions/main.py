@@ -6,6 +6,7 @@ from mystorytime_lib import generate_whole_story
 
 import dotenv
 import os
+import time
 dotenv.load_dotenv('.env')
 
 RUNPOD_URL="https://api.runpod.ai/v2/fsifxg8gticvgu/run"
@@ -25,9 +26,11 @@ def call_runpod(url, key, data):
     response = requests.post(url, headers=headers, json=data)
     return response.json()
 
-@firestore_fn.on_document_created(document="/Users/{user_id}/Stories/{story_id}", timeout_sec=300)
+@firestore_fn.on_document_created(document="/Users/{user_id}/Stories/{story_id}", timeout_sec=600)
 def function_generate_story(event: Event[DocumentSnapshot]):
     print('>>>>>>>>>>>>>>>>>>>DEBUG<<<<<<<<<<<<<<<<<<<')
+    t1 = time.time()
+    
     db = firestore.client()
     
     user_id = event.params['user_id']
@@ -61,6 +64,11 @@ def function_generate_story(event: Event[DocumentSnapshot]):
         .update(dict(status="done_story"))
     
     call_runpod(RUNPOD_URL, RUNPOD_KEY, request_data)
+    
+    t2 = time.time()
+    
+    print("Story generated in", t2 - t1, "seconds")
+    
     print('>>>>>>>>>>>>>>>>>>>END DEBUG<<<<<<<<<<<<<<<<<<<')
     
 
