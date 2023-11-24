@@ -9,6 +9,8 @@ def translate_whole_story(story, language):
         chapter['chapter_title'] = LLM_translate_text(chapter['chapter_title'], language)
         for paragraph in chapter['paragraphs']:
             paragraph['text'] = LLM_translate_text(paragraph['text'], language)
+        
+        print("Translated chapter:", chapter)
     return story
 
 
