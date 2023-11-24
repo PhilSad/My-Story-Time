@@ -32,13 +32,14 @@ def generate_whole_story(language, story_idea, hero_name):
         }
         whole_story.append(whole_chapter)
 
-    print("Whole story:")
-    print(whole_story)
 
     if language != 'english':
         print("Translating the story into", language)
-        whole_story_translated = translate_whole_story(whole_story, language)
+        whole_story = translate_whole_story(whole_story, language)
         print("Translated story:")
-        print(whole_story_translated)
 
-    return whole_story_translated
+    print("Whole story:")
+    print(whole_story)
+
+
+    return whole_story
