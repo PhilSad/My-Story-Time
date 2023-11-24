@@ -1,6 +1,6 @@
 "use client";
 import withAuth from '@/app/components/protectedRoute/protectedRoute';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useStore } from '@/app/store/root.store';
@@ -9,13 +9,11 @@ import { observer } from 'mobx-react-lite';
 
 const Page = observer(() => {
   const { storyStore } = useStore();
-  console.log("store",storyStore.story.prompt);
   const [promptInput, setInputPrompt] = useState(storyStore.story.prompt);
   const router = useRouter()
   const updatePrompt = () => {
     storyStore.setPromptStory(promptInput);
     router.push("/newStoryImage");
-    //storyStore.createNewStroy(null);
   }
   return (
     <div className="flex flex-row min-h-screen bg-cover bg-night font-agbalumo">

@@ -1,13 +1,16 @@
 "use client";
 import { StoryStore, storyStore } from '@/app/modules/stores/story.store';
+import { UserStore, userStore } from '@/app/modules/stores/user.store';
 import { Instance, types } from 'mobx-state-tree';
 import { ReactNode, createContext, useContext } from 'react';
 export const rootStore = types
   .model({
-    storyStore: StoryStore,
+    userStore: UserStore,
+    storyStore: StoryStore
   })
   .create({
-    storyStore: storyStore,
+    userStore: userStore,
+    storyStore: storyStore
   });
 const RootStoreContext = createContext<null | Instance<typeof rootStore>>(null);
 export interface StoreProviderProps {

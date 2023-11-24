@@ -2,7 +2,6 @@
 // const {logger} = require("firebase-functions");
 // const {onDocumentCreated} = require("firebase-functions/v2/firestore");
 const functions = require("firebase-functions");
-const {onCall} = require("firebase-functions/v2/https");
 
 // The Firebase Admin SDK to access Firestore.
 const {initializeApp} = require("firebase-admin/app");
@@ -20,22 +19,4 @@ exports.createUser = functions.auth.user().onCreate(async (user) => {
         email,
         displayName,
       });
-});
-
-exports.createNewStroy = onCall(async (request) => {
-  const uidUser = request.auth.uid;
-  const {prompt, urlImage, heroName, language} = request.data;
-
-  const writeResult = await getFirestore()
-      .collection("Users")
-      .doc(uidUser)
-      .collection("Stories")
-      .add({
-        story_idea: prompt,
-        urlImage: urlImage,
-        hero_name: heroName,
-        language: language,
-      });
-
-  console.log(`Document written with ID: ${writeResult.id} added.`);
 });

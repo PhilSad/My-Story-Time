@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./homePage.css";
 import Image from 'next/image'
 import ButtonMenu from '@/app/components/buttonMenu/buttonMenu';
@@ -10,6 +10,10 @@ import Link from 'next/link';
 const HomePage = () => {
   const router = useRouter();
 
+  useEffect(() => {
+    localStorage.clear();
+  }, [])
+  
   return (
     <div className="overflow-hidden homePage">
       <h1>My Bedtime Story</h1>

@@ -1,11 +1,14 @@
 import { Instance, types } from "mobx-state-tree";
+import { GeneratedStoryModelType } from './generatedStory.model';
 
 export const StoryModel = types.model("StoryModel", {
+  storyId: types.optional(types.string, ""),
   prompt: types.optional(types.string, ""),
-  urlImage: types.optional(types.string, ""),
-  storyContent: types.optional(types.string, ""),
+  urlImage: types.maybeNull(types.string),
   heroName: types.optional(types.string, ""),
   language: types.maybe(types.enumeration("language", ['en', 'fr'])),
+  story: types.array(types.frozen<GeneratedStoryModelType>()),
+  status: types.maybeNull(types.string),
 
 });
 
