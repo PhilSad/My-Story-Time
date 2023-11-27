@@ -58,6 +58,22 @@ def add_pictures_to_story(ip_model, story_with_images_desc, image):
     return story_with_images_desc
 
 
+def upload_image_and_get_url(image, user_id, story_id, image_name):
+    image_name = f"Images/{user_id}/{story_id}/{image_name}.jpeg"
+    print('saving image to', image_name)
+    # save image to buffer
+    image_ref = bucket.blob(image_name)
+    buffered = BytesIO()
+    image.save(buffered, format="JPEG")
+    buffered.seek(0)
+    # upload image to firebase storage
+    img_str = buffered.getvalue()
+    image_ref.upload_from_file(buffered, content_type="image/jpeg")
+    # get download url
+    download_url = image_ref.generate_signed_url(expiration=datetime.timedelta(days=100000))
+    print('done saving image to', image_name)
+    return download_url
+
 def handler(job):
     # get inputs
     job_input = job['input']
@@ -65,26 +81,22 @@ def handler(job):
     story_with_images_desc = job_input['story']
     user_id = job_input['user_id']
     story_id = job_input['story_id']
+    story_idea = job_input['story_idea']
 
     input_image = load_image(url_image)
+    
+    prompt_poster = f"Beautiful portrait, {story_idea}, cinematic, beautiful ovie poster style, epic, lights and shadows"
+    poster_image = generate_picture(ip_model, input_image, prompt_poster)
+    poster_image_url = upload_image_and_get_url(poster_image, user_id, story_id, 'poster.jpeg')
 
     story_with_images_desc = add_pictures_to_story(ip_model, story_with_images_desc, input_image)
 
     # save images to firebase storage Images/{user_id}/{story_id}/chapter_i_paragraph_j.png
     for i, chapter in enumerate(story_with_images_desc):
         for j, paragraph in enumerate(chapter['paragraphs']):
-            image_name = f"Images/{user_id}/{story_id}/chapter_{i}_paragraph_{j}.jpeg"
+            image_name = f"chapter_{i}_paragraph_{j}.jpeg"
             print('saving image to', image_name)
-            # save image to buffer
-            image_ref = bucket.blob(image_name)
-            buffered = BytesIO()
-            paragraph['image'].save(buffered, format="JPEG")
-            buffered.seek(0)
-            # upload image to firebase storage
-            img_str = buffered.getvalue()
-            image_ref.upload_from_file(buffered, content_type="image/jpeg")
-            # get download url
-            download_url = image_ref.generate_signed_url(expiration=datetime.timedelta(days=100000))
+            download_url = upload_image_and_get_url(paragraph['image'], user_id, story_id, image_name)
             paragraph['image'] = download_url
             print('done saving image to', image_name)
             print(paragraph)
@@ -97,7 +109,8 @@ def handler(job):
     story_ref = firebase_db.collection('Users').document(user_id).collection('Stories').document(story_id)
     story_ref.update({
         'story': story_with_images_desc,
-        'status': 'done'
+        'status': 'done',
+        'poster':  poster_image_url,
     })
         
     
