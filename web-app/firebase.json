@@ -9,5 +9,10 @@
     "frameworksBackend": {
       "region": "us-central1"
     }
-  }
+  },
+  "rewrites": [{
+    "source": "/app/**",
+    "dynamicLinks": true,
+    "function": "app"
+  }]
 }

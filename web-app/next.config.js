@@ -1,30 +1,17 @@
 // @ts-check
 
 /**
-* @type {import('next').NextConfig}
-*/
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
   /**
-   * Enable static exports for the App Router.
+   * Set base path if your app is not hosted on the root domain.
+   * For example, if your app is hosted at https://myapp.firebaseapp.com/myapp, set basePath to '/myapp'.
    *
-   * @see https://nextjs.org/docs/pages/building-your-application/deploying/static-exports
+   * @see https://nextjs.org/docs/api-reference/next.config.js/basepath
    */
-  output: "export",
-
-  /**
-   * Set base path. This is usually the slug of your repository.
-   *
-   * @see https://nextjs.org/docs/app/api-reference/next-config-js/basePath
-   */
-  basePath: "/nextjs-github-pages",
-
-  /**
-   * Disable server-based image optimization. Next.js does not support
-   * dynamic features with static exports.
-   *
-   * @see https://nextjs.org/docs/pages/api-reference/components/image#unoptimized
-   */
-  images: {
-    unoptimized: true,
-  }
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  trailingSlash: true
 };
+
+module.exports = nextConfig;

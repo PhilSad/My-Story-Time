@@ -96,7 +96,7 @@ a {
 
 @font-face {
   font-family: "Agbalumo";
-  src: url("./assets/fonts/Agbalumo.ttf");
+  src: url("/assets/fonts/Agbalumo.ttf");
 }
 
 main {

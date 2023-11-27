@@ -1,9 +1,8 @@
 "use client";
 import { UserAuth } from '@/app/context/authContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGear } from '@fortawesome/sharp-solid-svg-icons';
 import Link from 'next/link';
 import React, { useEffect } from 'react'
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const Header = () => {
   const { user, logOut } = UserAuth();
@@ -27,7 +26,7 @@ const Header = () => {
     <div>
       <div className="flex justify-end p-2 cursor-pointer">
         <div className="dropdown dropdown-end">
-          <label tabIndex={0} className=" btn-secondary btn"><FontAwesomeIcon icon={faGear} style={{ color: "#ffffff" }} size="xl" /></label>
+          <label tabIndex={0} className="btn-secondary btn"><SettingsIcon sx={{ color: "white" }} /></label>
           <ul tabIndex={0} className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
             <li>
               {!user ? <Link href={"/login"}>Login / Registrer</Link> : (

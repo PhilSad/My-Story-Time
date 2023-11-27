@@ -9,7 +9,6 @@ import {
   signInAnonymously
 } from "firebase/auth";
 import { auth } from "../config/firebase.config";
-import { addDoc } from 'firebase/firestore';
 const AuthContext = createContext<any>({});
 
 export const AuthContextProvider = ({ children }: any) => {

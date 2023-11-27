@@ -1,10 +1,9 @@
 "use client";
 import React, { useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { faUser } from '@fortawesome/sharp-solid-svg-icons';
 import { useRouter } from 'next/navigation'
 import { UserAuth } from '@/app/context/authContext';
+import GoogleIcon from '@mui/icons-material/Google';
+import PersonIcon from '@mui/icons-material/Person';
 
 const Page = () => {
   const { user, googleSignIn, anonymouslySignIn } = UserAuth();
@@ -43,8 +42,8 @@ const Page = () => {
       <div className="space-y-4 text-center modal-box">
         <h3 className="text-lg font-bold ">Connexion</h3>
         <p>Connectez vous pour créer une histoire !</p>
-        <div><button className="btn btn-outline" onClick={signInWithGoogle}><FontAwesomeIcon icon={faGoogle} />Se connecter avec Google</button></div>
-        <div><button className="btn btn-outline" onClick={signInAnonymously}><FontAwesomeIcon icon={faUser} />Se connecter anonymement</button></div>
+        <div><button className="btn btn-outline" onClick={signInWithGoogle}><GoogleIcon/>Se connecter avec Google</button></div>
+        <div><button className="btn btn-outline" onClick={signInAnonymously}><PersonIcon/>Se connecter anonymement</button></div>
         <div className="modal-action">
           <form method="dialog">
             <button className="btn" onClick={() => router.back()}>Annuler</button>

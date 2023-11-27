@@ -5,8 +5,6 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useStore } from '@/app/store/root.store';
 import { observer } from 'mobx-react-lite';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ref, uploadBytes } from 'firebase/storage';
 import { storage } from '@/app/config/firebase.config';
 import { getAuth } from 'firebase/auth';
@@ -59,7 +57,7 @@ const Page = observer(() => {
           <div className="w-48 h-48 shadow-xl btn card bg-base-100" onClick={handleClick}>
             <div className="flex items-center">
               <input type="file" id="fileInput" hidden onChange={(e) => handleFileChange(e)}></input>
-              <FontAwesomeIcon icon={faPlus} size="2xl" />
+              {/* <FontAwesomeIcon icon={faPlus} size="2xl" /> */}
             </div>
           </div>
         </div>
