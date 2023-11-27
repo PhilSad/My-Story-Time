@@ -48,7 +48,7 @@ def function_generate_story(event: Event[DocumentSnapshot]):
     db.collection("Users").document(user_id).collection("Stories").document(story_id) \
         .update(dict(status="generating"))
     
-    story_with_images_desc = generate_whole_story(language, story_idea, hero_name)
+    story_with_images_desc, story_idea_en = generate_whole_story(language, story_idea, hero_name)
     
     
     request_data = dict(
@@ -57,7 +57,7 @@ def function_generate_story(event: Event[DocumentSnapshot]):
             user_id=user_id,
             story_id=story_id,
             image_url=image_url,
-            story_idea=story_idea,
+            story_idea=story_idea_en,
         )
     )
     
