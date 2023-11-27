@@ -56,7 +56,8 @@ def function_generate_story(event: Event[DocumentSnapshot]):
             story=story_with_images_desc,
             user_id=user_id,
             story_id=story_id,
-            image_url=image_url
+            image_url=image_url,
+            story_idea=story_idea,
         )
     )
     
