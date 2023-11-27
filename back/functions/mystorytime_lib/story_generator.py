@@ -33,11 +33,14 @@ def generate_whole_story(language, story_idea, hero_name):
             "text": text,
             "paragraphs": LLM_split_and_describe(text)
         }
+        print(whole_chapter)
         whole_story.append(whole_chapter)
+    print("done splitting")
 
 
     if language != 'en':
         print("Translating the story into", language)
+        print('dfsqdf') # dont remove, might stop working
         whole_story = translate_whole_story(whole_story, language)
         print("Translated story:")
 

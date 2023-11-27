@@ -97,6 +97,7 @@ def LLM_write_story(story_idea, hero_name):
 
 # translate a given text using chatgpt
 def LLM_translate_text(text, language):
+    print('called LLM_translate_text')
     response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[{"role":"user", "content": prompt_template_translate(text, language)}],
