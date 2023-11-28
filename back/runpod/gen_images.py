@@ -9,10 +9,13 @@ import base64
 from io import BytesIO
 import firebase_admin
 from firebase_admin import credentials, storage, firestore
+import face_detection
 import json
 import dotenv
 import os
 import datetime
+import numpy as np
+
 dotenv.load_dotenv()
 
 
@@ -40,14 +43,71 @@ ip_model = IPAdapterPlusXL(pipe, "models/image_encoder",
                         "./models/ip-adapter-plus-face_sdxl_vit-h.bin", 
                         "cuda", num_tokens=16)
 
+face_detector = face_detection.build_detector(
+  "DSFDDetector", confidence_threshold=.5, nms_iou_threshold=.3)
 
-def generate_picture(ip_model, image, image_desc):
-    prompt = f" in a children cartoon style, {image_desc}."
-    images = ip_model.generate(pil_image=image, num_samples=1, num_inference_steps=30,
-                           prompt=prompt, scale=0.4)
+def crop_user_head(image):
+    """
+    Crop the head of the person in the image
+    input: PIL image
+    output: PIL image
+    """
+    # center crop
+    width, height = image.size
+    if width > height:
+        left = (width - height)/2
+        top = 0
+        right = (width + height)/2
+        bottom = height
+    else:
+        left = 0
+        top = (height - width)/2
+        right = width
+        bottom = (height + width)/2
+    image = image.crop((left, top, right, bottom))
+    
+    image.resize((1024, 1024))
+    
+    # detect face
+    padding = 25
+    detects = face_detector.detect(np.array(image))
+    if len(detects) == 1:
+        xmin, ymin, xmax, ymax, detection_confidence = detects[0]
+        cropped_image = image.crop((xmin - padding*2, ymin - padding*2, xmax + padding*2, ymax))
+    else:
+        raise Exception("No face detected or more than one face detected")
+    
+    return cropped_image
+
+def generate_base_picture( image):
+    prompt = "Close-up, high-resolution solo, portrait of a single person's head in cartoon style centered in the frame, futurama style, arcane style, archer style, with a clear focus on detailed facial features, colorful background"
+    negative_prompt = "full body, torso, black and white, multiple, mosaic"
+    
+    base_image = ip_model.generate(pil_image=image, num_samples=1, num_inference_steps=50,
+                           prompt=prompt, negative_prompt=negative_prompt, scale=0.3)[0]
+    padding = 25
+    detects = face_detector.detect(np.array(image))
+    while len(detects) != 1:
+        base_image = ip_model.generate(pil_image=image, num_samples=1, num_inference_steps=50,
+                           prompt=prompt, negative_prompt=negative_prompt, scale=0.3)[0]
+        detects = face_detector.detect(np.array(image))
+        
+        
+    xmin, ymin, xmax, ymax, detection_confidence = detects[0]
+    cropped_image = base_image.crop((xmin - padding*2, ymin - padding*2, xmax + padding*2, ymax))
+    
+    return cropped_image
+    
+
+
+def generate_picture(image, image_desc):
+    prompt = f"{image_desc}"
+    images = ip_model.generate(pil_image=image, num_samples=1, num_inference_steps=50,
+                           prompt=prompt, scale=0.7)
     return images[0]
 
-def add_pictures_to_story(ip_model, story_with_images_desc, image):
+
+def add_pictures_to_story(story_with_images_desc, image):
 
     for chapter in story_with_images_desc:
         print(f'done with chapter {chapter["chapter_title"]}')
@@ -85,11 +145,15 @@ def handler(job):
 
     input_image = load_image(url_image)
     
+    input_image = crop_user_head(input_image)
+    
+    input_image = generate_base_picture(input_image)
+    
     prompt_poster = f"Beautiful portrait, {story_idea}, cinematic, beautiful ovie poster style, epic, lights and shadows"
-    poster_image = generate_picture(ip_model, input_image, prompt_poster)
+    poster_image = generate_picture( input_image, prompt_poster)
     poster_image_url = upload_image_and_get_url(poster_image, user_id, story_id, 'poster.jpeg')
 
-    story_with_images_desc = add_pictures_to_story(ip_model, story_with_images_desc, input_image)
+    story_with_images_desc = add_pictures_to_story( story_with_images_desc, input_image)
 
     # save images to firebase storage Images/{user_id}/{story_id}/chapter_i_paragraph_j.png
     for i, chapter in enumerate(story_with_images_desc):
