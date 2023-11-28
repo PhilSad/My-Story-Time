@@ -18,6 +18,17 @@ import numpy as np
 
 dotenv.load_dotenv()
 
+# initialize firebase
+bucket_id = "mystorytime-e88bd.appspot.com"
+bucket_name="mystorytime-e88bd.appspot.com"
+cred = credentials.Certificate(json.loads(os.environ.get("FIREBASE_KEY").replace("\n", "\\n")))
+firebase_app = firebase_admin.initialize_app(cred, {
+    'storageBucket': bucket_id,
+}, name=bucket_name)
+
+bucket = storage.bucket(name=bucket_name, app=firebase_app)
+firebase_db = firestore.client(app=firebase_app)
+
 
 
 
@@ -96,12 +107,12 @@ def generate_picture(image, image_desc):
     return images[0]
 
 
-def add_pictures_to_story(story_with_images_desc, image):
+def add_pictures_to_story(story_with_images_desc, base_image):
 
     for chapter in story_with_images_desc:
         print(f'done with chapter {chapter["chapter_title"]}')
         for paragraph in chapter['paragraphs']:
-            image = generate_picture(ip_model, image, paragraph['image_desc'])
+            image = generate_picture(base_image, paragraph['image_desc'])
             paragraph['image'] = image
 
     return story_with_images_desc
@@ -124,18 +135,7 @@ def upload_image_and_get_url(bucket, image, user_id, story_id, image_name):
     return download_url
 
 def handler(job):
-    # initialize firebase
-    bucket_id = "mystorytime-e88bd.appspot.com"
-    bucket_name="mystorytime-e88bd.appspot.com"
-    cred = credentials.Certificate(json.loads(os.environ.get("FIREBASE_KEY").replace("\n", "\\n")))
-    firebase_app = firebase_admin.initialize_app(cred, {
-        'storageBucket': bucket_id,
-    }, name=bucket_name)
 
-    bucket = storage.bucket(name=bucket_name, app=firebase_app)
-    firebase_db = firestore.client(app=firebase_app)
-
-    
     # get inputs
     job_input = job['input']
     url_image = job_input['image_url']
