@@ -36,6 +36,7 @@ ip_model = IPAdapterPlusXL(pipe, "models/image_encoder",
 face_detector = face_detection.build_detector(
   "DSFDDetector", confidence_threshold=.5, nms_iou_threshold=.3)
 
+
 def crop_user_head(image):
     """
     Crop the head of the person in the image
@@ -55,9 +56,7 @@ def crop_user_head(image):
         right = width
         bottom = (height + width)/2
     image = image.crop((left, top, right, bottom))
-    
-    image.resize((1024, 1024))
-    
+        
     # detect face
     padding = 25
     detects = face_detector.detect(np.array(image))
@@ -74,12 +73,12 @@ def generate_base_picture( image):
     negative_prompt = "full body, torso, black and white, multiple, mosaic"
     
     base_image = ip_model.generate(pil_image=image, num_samples=1, num_inference_steps=50,
-                           prompt=prompt, negative_prompt=negative_prompt, scale=0.3)[0]
+                           prompt=prompt, negative_prompt=negative_prompt, scale=0.4)[0]
     padding = 25
     detects = face_detector.detect(np.array(image))
     while len(detects) != 1:
         base_image = ip_model.generate(pil_image=image, num_samples=1, num_inference_steps=50,
-                           prompt=prompt, negative_prompt=negative_prompt, scale=0.3)[0]
+                           prompt=prompt, negative_prompt=negative_prompt, scale=0.4)[0]
         detects = face_detector.detect(np.array(image))
         
         
