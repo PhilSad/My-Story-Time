@@ -19,16 +19,6 @@ import numpy as np
 dotenv.load_dotenv()
 
 
-# initialize firebase
-bucket_id = "mystorytime-e88bd.appspot.com"
-bucket_name="mystorytime-e88bd.appspot.com"
-cred = credentials.Certificate(json.loads(os.environ.get("FIREBASE_KEY").replace("\n", "\\n")))
-firebase_app = firebase_admin.initialize_app(cred, {
-    'storageBucket': bucket_id,
-}, name=bucket_name)
-
-bucket = storage.bucket(name=bucket_name, app=firebase_app)
-firebase_db = firestore.client(app=firebase_app)
 
 
 
@@ -118,7 +108,7 @@ def add_pictures_to_story(story_with_images_desc, image):
     return story_with_images_desc
 
 
-def upload_image_and_get_url(image, user_id, story_id, image_name):
+def upload_image_and_get_url(bucket, image, user_id, story_id, image_name):
     image_name = f"Images/{user_id}/{story_id}/{image_name}.jpeg"
     print('saving image to', image_name)
     # save image to buffer
@@ -135,6 +125,18 @@ def upload_image_and_get_url(image, user_id, story_id, image_name):
     return download_url
 
 def handler(job):
+    # initialize firebase
+    bucket_id = "mystorytime-e88bd.appspot.com"
+    bucket_name="mystorytime-e88bd.appspot.com"
+    cred = credentials.Certificate(json.loads(os.environ.get("FIREBASE_KEY").replace("\n", "\\n")))
+    firebase_app = firebase_admin.initialize_app(cred, {
+        'storageBucket': bucket_id,
+    }, name=bucket_name)
+
+    bucket = storage.bucket(name=bucket_name, app=firebase_app)
+    firebase_db = firestore.client(app=firebase_app)
+
+    
     # get inputs
     job_input = job['input']
     url_image = job_input['image_url']
@@ -151,7 +153,7 @@ def handler(job):
     
     prompt_poster = f"Beautiful portrait, {story_idea}, cinematic, beautiful ovie poster style, epic, lights and shadows"
     poster_image = generate_picture( input_image, prompt_poster)
-    poster_image_url = upload_image_and_get_url(poster_image, user_id, story_id, 'poster.jpeg')
+    poster_image_url = upload_image_and_get_url(bucket, poster_image, user_id, story_id, 'poster.jpeg')
 
     story_with_images_desc = add_pictures_to_story( story_with_images_desc, input_image)
 
@@ -180,7 +182,7 @@ def handler(job):
     
     return story_with_images_desc
 
-runpod.serverless.start({ "handler": handler}) 
+# runpod.serverless.start({ "handler": handler}) 
     
     
 

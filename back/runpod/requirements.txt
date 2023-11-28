@@ -5,4 +5,6 @@ einops
 git+https://github.com/tencent-ailab/IP-Adapter.git
 omegaconf
 runpod
+git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
 firebase_admin
+typing_extensions
