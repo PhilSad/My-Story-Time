@@ -161,7 +161,7 @@ def handler(job):
         for j, paragraph in enumerate(chapter['paragraphs']):
             image_name = f"chapter_{i}_paragraph_{j}.jpeg"
             print('saving image to', image_name)
-            download_url = upload_image_and_get_url(paragraph['image'], user_id, story_id, image_name)
+            download_url = upload_image_and_get_url(bucket, paragraph['image'], user_id, story_id, image_name)
             paragraph['image'] = download_url
             print('done saving image to', image_name)
             print(paragraph)
