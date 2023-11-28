@@ -10,12 +10,11 @@ function getLocale(request) {
   // Check if the request is from the browser (has window)
   if (typeof window !== 'undefined') {
     // Obtenez la locale préférée de l'utilisateur
-    const userLocale = navigator.languages && navigator.languages.length
-      ? navigator.languages[0]
-      : navigator.language;
-
+    const userLocale = window.navigator.languages && window.navigator.languages.length
+      ? window.navigator.languages[0]
+      : window.navigator.language;
     // Vérifiez si la locale de l'utilisateur est prise en charge
-    if (locales.includes(userLocale)) {
+    if (locales.includes(userLocale.slice(0, 1))) {
       return userLocale;
     } else {
       // Si la locale de l'utilisateur n'est pas prise en charge, utilisez une locale par défaut
@@ -28,6 +27,7 @@ function getLocale(request) {
 }
 
 export function middleware(request) {
+
   // Check if there is any supported locale in the pathname
   const { pathname } = request.nextUrl
   const pathnameHasLocale = locales.some(
@@ -49,7 +49,7 @@ export function middleware(request) {
 export const config = {
   matcher: [
     // Skip all internal paths (_next)
-    '/((?!_next).*)',
+    '/((?!api|_next/static|_next/image|assets|images|favicon.ico).*)',
     // Optional: only run on root (/) URL
     // '/'
   ],

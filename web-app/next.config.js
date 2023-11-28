@@ -1,4 +1,4 @@
-// @ts-check
+// @ts-checkx
 
 /**
  * @type {import('next').NextConfig}
@@ -11,7 +11,7 @@ const nextConfig = {
    * @see https://nextjs.org/docs/api-reference/next.config.js/basepath
    */
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
-  trailingSlash: true
+  trailingSlash: true,
 };
 
 module.exports = nextConfig;

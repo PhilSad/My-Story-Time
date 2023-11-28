@@ -66,11 +66,15 @@ export const StoryStore = types
     },
     uploadProfilImage: flow(function* (file: any, userId: string) {
       //Send to storage
+
       const storageRef = ref(storage, `images/${userId}/userImages/${file.name}`);
+      const result = yield uploadBytes(storageRef, file).then((snapshot) => {
+        return snapshot;
+      });
       //Get DownloadUrl
-      const downloadURL = yield getDownloadURL(storageRef);
-      self.story.urlImage = downloadURL;
+      const downloadURL = yield getDownloadURL(result.ref);
       return downloadURL;
+      
     }),
     createNewStory: flow(function* () {
       try {

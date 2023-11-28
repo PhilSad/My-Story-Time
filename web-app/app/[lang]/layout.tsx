@@ -14,12 +14,13 @@ export async function generateStaticParams() {
   return [{ lang: 'en' }, { lang: 'fr' }]
 }
 export default function RootLayout({
-  children,
+  children, params
 }: {
-  children: React.ReactNode
+    children: React.ReactNode,
+  params: any
 }) {
   return (
-    <html lang="en">
+    <html lang={params.lang}>
       <body className={inter.className}>
         <AuthContextProvider>
           <StoreProvider>

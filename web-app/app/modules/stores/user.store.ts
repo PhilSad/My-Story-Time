@@ -18,7 +18,6 @@ export const UserStore = types
         const docRef = doc(db, "Users", userId);
 
         const querySnapshot = yield getDocs(collection(docRef, "UserImages"));
-        console.log(querySnapshot.docs);
         self.user.userImages = querySnapshot.docs.map((doc: any) => doc.data().urlImage);
 
       } catch (error) {
