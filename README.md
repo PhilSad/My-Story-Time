@@ -6,7 +6,7 @@ This is an illustrated story generator app allowing users to create stories base
 
 You can try it out [here](https://mystorytime-e88bd.web.app/).
 
-This app use Next.js, Firebase, ChatGPT, and Stable Diffusion XL with IP Adapter.
+This app use Next.js, Firebase, Runpod, ChatGPT, and Stable Diffusion XL with IP Adapter.
 
 ## How it works
 
