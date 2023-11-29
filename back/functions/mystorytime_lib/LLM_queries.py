@@ -61,7 +61,7 @@ def LLM_describe_chapter(captions):
 
 
 # returns a paragraph dictionnary with text and description for a given chapter
-def LLM_split_and_describe(chapter, n_panels=4):
+def LLM_split_and_describe(chapter, n_panels=3):
     """Split a chapter into its parts and describe every part for image generation
 
     Keyword arguments:  
@@ -86,7 +86,7 @@ def LLM_split_and_describe(chapter, n_panels=4):
 def LLM_write_story(story_idea, hero_name):
     prompt = prompt_template_writestory(story_idea, hero_name)
     response = openai.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4-1106-preview",
         messages=[{"role":"user", "content": prompt}]
     )
     
