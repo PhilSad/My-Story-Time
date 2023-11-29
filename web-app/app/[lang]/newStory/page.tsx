@@ -25,16 +25,16 @@ const Page = observer(() => {
   return (
     <div className='min-h-screen space-y-24 bg-cover bg-night font-agbalumo lg:space-y-52'>
       <div className='w-full pt-9 basis-1/5'>
-            <h1 className='text-5xl text-center text-white'>My Bedtime Story</h1>
+        <h1 className='text-5xl text-center text-white'>My Bedtime Story</h1>
       </div>
       <div className="flex flex-row ">
         <div className='flex grid content-center w-full mx-5 space-y-10 lg:mx-48 md:mx-28'>
-          <div className='text-3xl text-white'>Que raconte l’histoire ?</div>
+          <div className='text-3xl text-white'>What's the story about</div>
           <input type="text" value={promptInput} placeholder="Un pirate a perdu son pérroquet.." className="w-full input input-bordered" onChange={(e) => setInputPrompt(e.target.value)} />
           <input type="text" value={heroName} placeholder="Emilie" className="w-full input input-bordered" onChange={(e) => setHeroName(e.target.value)} />
           <div className='flex justify-between'>
             <div className='text-white btn btn-error' onClick={() => router.push('/')}>Annuler</div>
-            <div className={`text-white btn btn-success ${promptInput == '' || heroName == '' ? "btn-disabled": ""}`} onClick={updatePrompt}>Valider</div>
+            <div className={`text-white btn btn-success ${promptInput == '' || heroName == '' ? "btn-disabled" : ""}`} onClick={updatePrompt}>Submit</div>
           </div>
           <div className='absolute bottom-0 right-0 z-10'>
             <Image
@@ -47,7 +47,7 @@ const Page = observer(() => {
         </div>
       </div>
     </div>
-    
+
   )
 });
 export default withAuth(Page);

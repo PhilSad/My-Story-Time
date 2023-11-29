@@ -40,13 +40,13 @@ const Page = () => {
   return (
     <dialog id="authModal" className={"modal modal-open"}>
       <div className="space-y-4 text-center modal-box">
-        <h3 className="text-lg font-bold ">Connexion</h3>
-        <p>Connectez vous pour créer une histoire !</p>
-        <div><button className="btn btn-outline" onClick={signInWithGoogle}><GoogleIcon/>Se connecter avec Google</button></div>
-        <div><button className="btn btn-outline" onClick={signInAnonymously}><PersonIcon/>Se connecter anonymement</button></div>
+        <h3 className="text-lg font-bold ">Login / Register</h3>
+        <p>Login / Register to make a story!</p>
+        <div><button className="btn btn-outline" onClick={signInWithGoogle}><GoogleIcon/>Google Sign-In</button></div>
+        <div><button className="btn btn-outline" onClick={signInAnonymously}><PersonIcon/>Anonymous Sign-In</button></div>
         <div className="modal-action">
           <form method="dialog">
-            <button className="btn" onClick={() => router.back()}>Annuler</button>
+            <button className="btn" onClick={() => router.back()}>Back</button>
           </form>
         </div>
       </div>

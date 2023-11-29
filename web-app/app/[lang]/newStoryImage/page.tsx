@@ -58,17 +58,17 @@ const Page = observer(() => {
             </div>
           </div>
           {userStore.user.userImages.map((imageUrl, i) => {
-            return(
+            return (
               <div key={i} className={`w-32 h-32 m-2 shadow-xl card btn bg-base-100" ${imageUrl == storyStore.story.urlImage ? "btn-success" : ""}`} onClick={() => selectImage(imageUrl)}>
-                <img src={imageUrl} alt="My Image"/>
+                <img src={imageUrl} alt="My Image" />
               </div>
             )
           })}
-          
+
         </div>
         <div className='flex justify-between'>
           <div className='text-white btn btn-error' onClick={() => router.push('/newStory')}>Annuler</div>
-          <div className='text-white btn btn-success' onClick={createNewStroy}>Valider</div>
+          <div className='text-white btn btn-success' onClick={createNewStroy}>Submit</div>
         </div>
 
       </div>
