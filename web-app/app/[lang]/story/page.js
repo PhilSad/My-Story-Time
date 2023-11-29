@@ -18,7 +18,8 @@ const Page = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    storyStore.startListening(uidUser);
+    console.log("ss", storyStore.story.status);
+    if (storyStore.story.status != 'done') storyStore.startListening(uidUser);
   //   const fetchData = async () => {
   //     await storyStore.getStoryById("ej4PmjBLv03SUf1bOdC1", uidUser);
   //     setIsLoading(false);
@@ -31,6 +32,7 @@ const Page = observer(() => {
 
   }, []);
   useEffect(() => {
+    console.log(storyStore.story.status);
     if (storyStore.story.status == 'done') {
       setIsLoading(false);
       createBook();
@@ -40,6 +42,7 @@ const Page = observer(() => {
 
   const createBook = () => {
     const book = [];
+    console.log("storyStore.story", storyStore.story.story)
     storyStore.story.story.forEach((chapter) => {
       chapter.paragraphs.forEach((paragraph) => {
         const page = {
@@ -53,9 +56,8 @@ const Page = observer(() => {
     }
     );
     setPage(book);
-    console.log(book);
+    console.log("book",book);
   }
-  console.log(storyStore.story);
   return (
     <div className="flex flex-row justify-center min-h-screen text-black bg-cover bg-night font-agbalumo">
       {!isLoading ?
@@ -83,7 +85,10 @@ const Page = observer(() => {
           })
           }
         </HTMLFlipBook> :
-        <div>Chargement</div>}
+        <div className='flex flex-col items-center justify-center'>
+          <span className="loading loading-lg loading-spinner text-warning"></span>
+          <div className='text-2xl text-white'>La génération prend une 10ène de minutes</div>
+        </div>}
     </div>
   )
 });

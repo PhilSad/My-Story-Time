@@ -7,7 +7,7 @@ export const StoryModel = types.model("StoryModel", {
   urlImage: types.maybeNull(types.string),
   heroName: types.optional(types.string, ""),
   language: types.maybe(types.enumeration("language", ['en', 'fr'])),
-  story: types.array(types.frozen<GeneratedStoryModelType>()),
+  story: types.maybeNull(types.array(types.frozen<GeneratedStoryModelType>())),
   status: types.maybeNull(types.string),
 
 });

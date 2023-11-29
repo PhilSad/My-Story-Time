@@ -6,20 +6,85 @@ import { db, storage } from '@/app/config/firebase.config';
 import { getAuth } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { create } from "mobx-persist";
+import { cast } from "mobx-state-tree"
 
 export const StoryStore = types
   .model("Story", {
     story: StoryModel,
-    stories: types.maybe(types.array(StoryModel)),
+    stories: types.array(StoryModel),
     unsubscribe: types.optional(types.frozen(), undefined),
     
   })
   .actions((self) => ({
+    reset() {
+      self.story = {
+        storyId: '',
+        prompt: '',
+        urlImage: '',
+        heroName: 'Emilie',
+        language: 'en',
+        story: null,
+        status: ''
+      };
+      self.stories = cast([]);
+    },
+    setStory(story: any) {
+      console.log("s", story);
+      self.story.story = cast([]);
+      // const newStory = {
+      //   storyId: story.storyId,
+      //   heroName: story.heroName,
+      //   language: story.language,
+      //   prompt: story.prompt,
+      //   story: story.story,
+      //   status: story.status || "",
+      //   urlImage: story.urlImage || ""
+      // }
+      const newStory = {
+        ...self.story,
+        storyId: story.storyId,
+        status: story.status,
+        heroName: story.heroName,
+        story: story.story,
+      }
+      self.story = newStory;
+    },
     stopListening() {
       if (self.unsubscribe) {
         self.unsubscribe();
       }
     },
+    getStories: flow(function* (uidUser: string) {
+      // Construire la référence du document
+      const userDocRef = doc(db, 'Users', uidUser);
+
+      // Construire la référence de la collection Stories pour cet utilisateur
+      const storiesCollectionRef = collection(userDocRef, 'Stories');
+      try {
+        const docSnap = yield getDocs(storiesCollectionRef);
+        const vide:any[] = [];
+        docSnap.forEach((storyDoc: { id: any; data: () => any; }) => {
+          // Traiter chaque document dans la collection Stories
+
+          const newStory = {
+            storyId: storyDoc.id,
+            heroName: storyDoc.data().hero_name,
+            language: storyDoc.data().language,
+            prompt: storyDoc.data().story_idea,
+            story: storyDoc.data().story,
+            status: storyDoc.data().status,
+            urlImage: storyDoc.data().urlImage
+          }
+          vide.push(newStory);
+          console.log('Story ID:', storyDoc.id, 'Data:', storyDoc.data());
+        });
+        self.stories = cast(vide);
+
+        
+      } catch (e) {
+        console.error('Erreur lors de la récupération des histoires:', e);
+      }
+    }),
     getStoryById: flow(function* (id: string, uidUser: string) {
       const docRef = doc(db, "Users", uidUser, "Stories", id);
       const docSnap = yield getDoc(docRef);
@@ -30,6 +95,8 @@ export const StoryStore = types
           language: docSnap.data().language,
           prompt: docSnap.data().story_idea,
           story: docSnap.data().story,
+          status: docSnap.data().status,
+          storyId: docSnap.data().id,
         }
 
         self.story = newStory;
@@ -54,6 +121,13 @@ export const StoryStore = types
       const newStory = {
         ...self.story,
         prompt
+      }
+      self.story = newStory;
+    },
+    setHeroName(heroName: string) {
+      const newStory = {
+        ...self.story,
+        heroName
       }
       self.story = newStory;
     },
@@ -128,7 +202,7 @@ export const storyStore = StoryStore.create({
     storyId: '',
     prompt: '',
     urlImage: '',
-    heroName: 'Emilie',
+    heroName: '',
     language: 'en',
     story: [],
     status: ''

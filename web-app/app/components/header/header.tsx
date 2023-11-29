@@ -3,9 +3,11 @@ import { UserAuth } from '@/app/context/authContext';
 import Link from 'next/link';
 import React, { useEffect } from 'react'
 import SettingsIcon from '@mui/icons-material/Settings';
+import { useStore } from '@/app/store/root.store';
 
 const Header = () => {
   const { user, logOut } = UserAuth();
+  const { storyStore } = useStore();
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -17,6 +19,7 @@ const Header = () => {
   const disconnect = async () => {
     try {
       await logOut();
+      await storyStore.reset();
     } catch (err) {
       console.error(err);
     }
