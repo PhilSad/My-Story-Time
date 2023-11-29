@@ -80,16 +80,16 @@ def crop_user_head(image):
     return cropped_image
 
 def generate_base_picture( image):
-    prompt = "Close-up, high-resolution solo, portrait of a single person's head in cartoon style centered in the frame, futurama style, arcane style, archer style, with a clear focus on detailed facial features, colorful background"
+    prompt = "Close-up, high-resolution solo, portrait of a single person's head in children cartoon style centered in the frame, futurama style, arcane style, archer style, with a clear focus on detailed facial features, colorful background"
     negative_prompt = "full body, torso, black and white, multiple, mosaic"
     
     base_image = ip_model.generate(pil_image=image, num_samples=1, num_inference_steps=50,
-                           prompt=prompt, negative_prompt=negative_prompt, scale=0.4)[0]
+                           prompt=prompt, negative_prompt=negative_prompt, scale=0.35)[0]
     padding = 25
     detects = face_detector.detect(np.array(base_image))
     while len(detects) != 1:
         base_image = ip_model.generate(pil_image=image, num_samples=1, num_inference_steps=50,
-                           prompt=prompt, negative_prompt=negative_prompt, scale=0.4)[0]
+                           prompt=prompt, negative_prompt=negative_prompt, scale=0.35)[0]
         detects = face_detector.detect(np.array(base_image))
         
         
