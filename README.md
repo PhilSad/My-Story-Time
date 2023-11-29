@@ -23,3 +23,9 @@ This app use Next.js, Firebase, Runpod, ChatGPT, and Stable Diffusion XL with IP
 * Web App: `./web-app`
 * Story and Prompts generation: `./back/functions/`
 * Image Generation: `./back/runpod/`
+
+## todos
+
+- [ ] refactor image generation for standolone use
+- [ ] use diffuser's IP Adapter for image generation to use prompt weighting (when IP Face is supported)
+- [ ] don't use IP Adapter for splits where the hero is not present
