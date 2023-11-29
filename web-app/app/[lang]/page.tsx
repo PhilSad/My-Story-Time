@@ -7,10 +7,11 @@ import { getDictionary } from '@/app/[lang]/dictionnaries';
 import Image from "next/image";
 import useMobile from '@/app/hooks/useMobile.hook';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation'
 
 export default function Home({ params: { lang } }: any) {
   const isMobile = useMobile();
-
+  const router = useRouter()
   const [dict, setDict] = useState<any>(null);
 
   useEffect(() => {
@@ -21,7 +22,10 @@ export default function Home({ params: { lang } }: any) {
 
     fetchDictionary();
   }, [lang]);
-  
+  const tryMe = () => {
+    router.push("/demoStory");
+
+  }
   return (
     <main>
       <div className="relative home">
@@ -34,6 +38,10 @@ export default function Home({ params: { lang } }: any) {
           <div className={!isMobile ? `basis-2/5 ` : `basis-1/5 mt-5`}>
             <div className='text-center text-white lg:text-3xl sm:text-lg'>Bienvenue ! Je suis Tobby ! </div>
             <div className='text-center text-white lg:text-3xl sm:text-lg'>Je créé des histoires grace à ton idée et une photo de toi ! </div>
+            <div className='flex justify-center w-full mt-4 mb-2'>
+              <button className="text-lg btn" onClick={tryMe}>Try me</button>
+
+            </div>
             {!isMobile && <div className='absolute right-0 z-10'>
               <Image
                 src="/assets/images/martien.png"
