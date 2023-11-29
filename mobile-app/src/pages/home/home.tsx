@@ -112,7 +112,7 @@ const Home = ({ navigation }: any) => {
     <ImageBackground source={require(image)} resizeMode="cover" style={styles.image}>
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
-          <Text style={styles.title}>My Bedtime Story</Text>
+          <Text style={styles.title}>My Story Time</Text>
 
           <TouchableOpacity style={styles.settingButton} onPress={() => navigation.push("Settings")}>
             <View style={styles.setting}>
@@ -144,7 +144,7 @@ const Home = ({ navigation }: any) => {
                 source={require('../../../assets/images/stories.png')}
               />
               <View style={styles.buttonHome}>
-                <ButtonHome text={'Histoires enregistrées'} />
+                <ButtonHome text={'Saved stories'} />
               </View>
               <Image
                 style={styles.meteoriteStories}

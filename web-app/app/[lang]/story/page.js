@@ -81,7 +81,7 @@ const Page = observer(() => {
         </HTMLFlipBook> :
         <div className='flex flex-col items-center justify-center'>
           <span className="loading loading-lg loading-spinner text-warning"></span>
-          <div className='text-2xl text-white'>La génération prend une 10ène de minutes</div>
+          <div className='text-2xl text-white'>The generation can take up to 10 minutes</div>
         </div>}
     </div>
   )

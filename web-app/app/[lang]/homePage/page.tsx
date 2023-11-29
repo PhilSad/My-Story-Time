@@ -10,7 +10,7 @@ const HomePage = async ({ params: { lang } }:any) => {
   
   return (
     <div className="h-full overflow-hidden">
-      <h1 className='text-5xl text-center pt-9'>My Bedtime Story</h1>
+      <h1 className='text-5xl text-center pt-9'>My Story TIme</h1>
       <div className="text-color-white">
         <SpeechBubble text={dict.home.tobbyWelcome} />
       </div>

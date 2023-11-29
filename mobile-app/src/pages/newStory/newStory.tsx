@@ -13,12 +13,12 @@ const NewStory = ({ navigation }: any) => {
         <BackButton navigation={navigation} />
         <View style={styles.containerFlex}>
           <View style={styles.row4}>
-            <Text style={styles.title}>Que raconte l'histoire ?</Text>
+            <Text style={styles.title}>What is the story about?</Text>
             <TextInput
               onChangeText={setTextInput}
               value={textInput}
               style={styles.input}
-              placeholder="Un pirate a perdu son perroquet"
+              placeholder="A pirate lost his parrot"
               placeholderTextColor="#AAAAAA"
             />
             <ValidationButton navigation={navigation} navigationScreen={"TakePicturesScreen"} />

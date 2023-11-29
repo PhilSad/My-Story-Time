@@ -1,5 +1,7 @@
 {
-  "home":{
-    "newStory": "New story"
+  "home": {
+    "newStory": "New Story",
+    "tobbyWelcome": "Welcome! I'm Tobby! I create a stories from your ideas and a picture of you!",
+    "savedStories": "Saved stories"
   }
 }

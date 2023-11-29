@@ -46,10 +46,10 @@ const Page = observer(() => {
   return (
     <div className='min-h-screen space-y-20 bg-cover bg-night font-agbalumo lg:space-y-52'>
       <div className='w-full pt-9 basis-1/5'>
-        <h1 className='text-5xl text-center text-white'>My Bedtime Story</h1>
+        <h1 className='text-5xl text-center text-white'>My Story Time</h1>
       </div>
       <div className='flex flex-col mx-4 space-y-4 overflow-hidden lg:m-48 md:mx-28'>
-        <div className='text-3xl text-white'>Ajoute des photos</div>
+        <div className='text-3xl text-white'>Add and select a picture of yourself</div>
         <div className='flex overflow-x-auto flex-nowrap'>
           <div className="w-32 h-32 m-2 shadow-xl btn card bg-base-100" onClick={handleClick}>
             <div className="flex items-center">

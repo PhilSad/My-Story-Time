@@ -14,7 +14,7 @@ const Page = observer(() => {
   const [promptInput, setInputPrompt] = useState(storyStore.story.prompt);
   const [heroName, setHeroName] = useState(storyStore.story.heroName);
   const [selectedLanguage, setSelectedLanguage] = useState('');
-  const [style, setStyle] = useState('Cartoon');
+  const [style, setStyle] = useState('Cute children book style');
 
   const router = useRouter()
 
@@ -39,16 +39,16 @@ const Page = observer(() => {
       <div className="flex flex-row ">
         <div className='flex grid content-center w-full mx-5 space-y-10 lg:mx-48 md:mx-28'>
           <div className='text-3xl text-white'>What's the story about</div>
-          <input type="text" value={promptInput} placeholder="Un pirate a perdu son pérroquet.." className="w-full input input-bordered" onChange={(e) => setInputPrompt(e.target.value)} />
+          <input type="text" value={promptInput} placeholder="A pirate lost his parrot" className="w-full input input-bordered" onChange={(e) => setInputPrompt(e.target.value)} />
           <label className="w-full form-control">
             <div className="label">
-              <span className="text-lg text-white label-text">Quel est le nom du hero ?</span>
+              <span className="text-lg text-white label-text">What is the character name?</span>
             </div>
             <input type="text" value={heroName} placeholder="Emilie" className="w-full input input-bordered" onChange={(e) => setHeroName(e.target.value)} />
           </label>
           <label className="w-full form-control">
             <div className="label">
-              <span className="text-lg text-white label-text">Quel style ?</span>
+              <span className="text-lg text-white label-text">What style ?</span>
             </div>
             <input type="text" value={style} placeholder="Style" className="w-full input input-bordered" onChange={(e) => setStyle(e.target.value)} />
           </label>
@@ -58,10 +58,10 @@ const Page = observer(() => {
             value={selectedLanguage} // Définissez la valeur actuelle du select sur l'état
           >
             <option disabled value="" selected>
-              Choisissez une langue
+              Choose a language
             </option>
-            <option value="fr">Français</option>
-            <option value="en">Anglais</option>
+            <option value="fr">French</option>
+            <option value="en">English</option>
           </select>
 
           <div className='flex justify-between'>

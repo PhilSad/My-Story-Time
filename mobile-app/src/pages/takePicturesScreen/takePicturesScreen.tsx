@@ -11,7 +11,7 @@ const TakePicturesScreen = ({ navigation }: any) => {
         <BackButton navigation={navigation} />
         <View style={styles.containerFlex}>
           <View style={styles.row4}>
-            <Text style={styles.title}>Ajoute des photos</Text>
+            <Text style={styles.title}>Add pictures of you</Text>
 
             <ValidationButton navigation={navigation} navigationScreen={"GenerationScreen"} />
 

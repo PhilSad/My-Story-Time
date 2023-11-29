@@ -33,11 +33,11 @@ export default function Home({ params: { lang } }: any) {
           <Header />
 
           <div className='w-full pt-9 basis-1/5'>
-            <h1 className='text-5xl text-center text-white'>My Bedtime Story</h1>
+            <h1 className='text-5xl text-center text-white'>My Story Time</h1>
           </div>
           <div className={!isMobile ? `basis-2/5 ` : `basis-1/5 mt-5`}>
-            <div className='text-center text-white lg:text-3xl sm:text-lg'>Bienvenue ! Je suis Tobby ! </div>
-            <div className='text-center text-white lg:text-3xl sm:text-lg'>Je créé des histoires grace à ton idée et une photo de toi ! </div>
+            <div className='text-center text-white lg:text-3xl sm:text-lg'>Welcome! I'm Tobby!</div>
+            <div className='text-center text-white lg:text-3xl sm:text-lg'>I create a stories from your ideas and a picture of you! </div>
             <div className='flex justify-center w-full mt-4 mb-2'>
               <button className="text-lg btn" onClick={tryMe}>Try me</button>
 
@@ -54,7 +54,7 @@ export default function Home({ params: { lang } }: any) {
           {!isMobile ? <div className='flex flex-row w-full basis-2/5'>
             <Link href={"/savedStories"} className='relative flex justify-center w-full'>
               <div className='absolute z-20 bottom-20'>
-                <ButtonMenu text="Histoires enregistrées"  />
+                <ButtonMenu text="Saved stories"  />
               </div>
               <div className='absolute z-10 bottom-40'>
                 <Image
@@ -136,7 +136,7 @@ export default function Home({ params: { lang } }: any) {
                   height={100}
                   alt="Picture of the author"
                   />
-                  <ButtonMenu text="Histoires enregistrées" />
+                  <ButtonMenu text="Saved stories" />
 
               </div>
             </Link>
