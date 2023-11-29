@@ -15,7 +15,7 @@ This app use Next.js, Firebase, Runpod, ChatGPT, and Stable Diffusion XL with IP
 3. ChatGPT generates a story based on the prompt.
 4. ChatGPT split chapters and generate Stable Diffusion prompts for each splits
 5. Stable Diffusion XL with IP Adapter with low weight generates an avatar based on the picture of the user
-6. Stable Diffusion XL with IP Adapter with high weight generates illustrations for each prompts based on the genrated avatar --> **this allow the generated pictures to have consistent style and head across the story**
+6. Stable Diffusion XL with IP Adapter with high weight generates illustrations for each prompts based on the generated avatar --> **this allow the generated pictures to have consistent style and head across the story**
 
 
 ## Directory Structure
@@ -26,6 +26,6 @@ This app use Next.js, Firebase, Runpod, ChatGPT, and Stable Diffusion XL with IP
 
 ## todos
 
-- [ ] refactor image generation for standolone use
+- [ ] refactor image generation for standalone use
 - [ ] use diffuser's IP Adapter for image generation to use prompt weighting (when IP Face is supported)
 - [ ] don't use IP Adapter for splits where the hero is not present
