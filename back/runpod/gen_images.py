@@ -79,8 +79,8 @@ def crop_user_head(image):
     
     return cropped_image
 
-def generate_base_picture( image):
-    prompt = "Close-up, high-resolution solo, portrait of a single person's head in children cartoon style centered in the frame, futurama style, arcane style, archer style, with a clear focus on detailed facial features, colorful background"
+def generate_base_picture( image, style): 
+    prompt = f"Close-up, high-resolution solo, portrait of a single person's head, centered in the frame, {style}, with a clear focus on detailed facial features, colorful background"
     negative_prompt = "full body, torso, black and white, multiple, mosaic"
     
     base_image = ip_model.generate(pil_image=image, num_samples=1, num_inference_steps=50,
@@ -102,7 +102,7 @@ def generate_base_picture( image):
 
 def generate_picture(image, image_desc):
     prompt = f"{image_desc}"
-    images = ip_model.generate(pil_image=image, num_samples=1, num_inference_steps=50,
+    images = ip_model.generate(pil_image=image, num_samples=1, num_inference_steps=35,
                            prompt=prompt, scale=0.7)
     return images[0]
 
@@ -143,12 +143,15 @@ def handler(job):
     user_id = job_input['user_id']
     story_id = job_input['story_id']
     story_idea = job_input['story_idea']
+    style = job_input.get('style')
+    if style =="default":
+        style = "in a children cartoon style"
 
     input_image = load_image(url_image)
     
     input_image = crop_user_head(input_image)
     
-    input_image = generate_base_picture(input_image)
+    input_image = generate_base_picture(input_image, style)
     
     prompt_poster = f"Beautiful portrait, {story_idea}, cinematic, beautiful ovie poster style, epic, lights and shadows"
     poster_image = generate_picture( input_image, prompt_poster)

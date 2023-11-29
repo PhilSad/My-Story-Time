@@ -43,6 +43,7 @@ def function_generate_story(event: Event[DocumentSnapshot]):
     hero_name = story_data['hero_name']
     language = story_data['language'].lower()
     image_url = story_data['urlImage']
+    style = story_data.get('style', 'default')
     
     
     db.collection("Users").document(user_id).collection("Stories").document(story_id) \
@@ -58,6 +59,7 @@ def function_generate_story(event: Event[DocumentSnapshot]):
             story_id=story_id,
             image_url=image_url,
             story_idea=story_idea_en,
+            style=style,
         )
     )
     
