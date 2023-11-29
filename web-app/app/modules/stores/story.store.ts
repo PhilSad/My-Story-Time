@@ -22,7 +22,7 @@ export const StoryStore = types
         prompt: '',
         urlImage: '',
         heroName: '',
-        language: 'en',
+        language: '',
         story: null,
         status: '',
         style: ''
@@ -77,7 +77,6 @@ export const StoryStore = types
       }
     }),
     getStoryById: flow(function* (id: string, uidUser: string) {
-
       const docRef = doc(db, "Users", uidUser, "Stories", id);
       const docSnap = yield getDoc(docRef);
       if (docSnap.exists()) {
@@ -212,11 +211,12 @@ export const storyStore = StoryStore.create({
 
 let hydrate;
 
+if (typeof window !== 'undefined') {
   hydrate = create({
     storage: localStorage,
     jsonify: true, // Laisser le JSON.stringify à l'utilisateur
   });
-
+}
 
 // Indiquer quelles parties du store vous souhaitez persister
 if (hydrate) {
