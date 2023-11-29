@@ -18,6 +18,7 @@ Panel <n>:
 prompt_story_instruction = """
 Instructions:
 A chapter must be short and end with a cliffhanger.
+The story should end with a happy ending and a moral.
 Every chapter starts with "Chapter N: <title of the chapter>".
 """
 
