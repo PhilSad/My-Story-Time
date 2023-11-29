@@ -12,7 +12,7 @@ const HomePage = async ({ params: { lang } }:any) => {
     <div className="h-full overflow-hidden">
       <h1 className='text-5xl text-center pt-9'>My Bedtime Story</h1>
       <div className="text-color-white">
-        <SpeechBubble text={"Bienvenue ! Je suis Tobby ! Je créé des histoires grace à ton idée et une photo de toi ! "} />
+        <SpeechBubble text={dict.home.tobbyWelcome} />
       </div>
       <div className='flex'>
         <Link href={"/newStory"} className='flex justify-center w-full'>
@@ -38,7 +38,7 @@ const HomePage = async ({ params: { lang } }:any) => {
         </Link>
         <Link href={"/savedStories"} className='flex justify-center w-full'>
           <div className='absolute z-10 bottom-20'>
-            <ButtonMenu text="Histoires enregistrées" />
+            <ButtonMenu text={dict.home.savedStories} />
           </div>
           <div className='absolute z-10 bottom-40'>
             <img
