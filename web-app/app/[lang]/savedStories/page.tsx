@@ -21,6 +21,7 @@ const page = observer(() => {
   }, []);
 
   const onClick = (story: any) => {
+    storyStore.reset();
     storyStore.getStoryById(story.storyId, uidUser);
     router.push("/story");
   }

@@ -18,31 +18,20 @@ const Page = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log("ss", storyStore.story.status);
+    console.log(storyStore.story);
     if (storyStore.story.status != 'done') storyStore.startListening(uidUser);
-  //   const fetchData = async () => {
-  //     await storyStore.getStoryById("ej4PmjBLv03SUf1bOdC1", uidUser);
-  //     setIsLoading(false);
-  //     createBook();
-  //   }
-  //   // call the function
-  //   fetchData()
-  //     // make sure to catch any error
-  //     .catch(console.error);
-
+    
   }, []);
   useEffect(() => {
-    console.log(storyStore.story.status);
     if (storyStore.story.status == 'done') {
       setIsLoading(false);
       createBook();
     }
-  }, [storyStore.story.status])
+  }, [storyStore.story.status]);
   const [pages, setPage] = useState([]);
 
   const createBook = () => {
     const book = [];
-    console.log("storyStore.story", storyStore.story.story)
     storyStore.story.story.forEach((chapter) => {
       chapter.paragraphs.forEach((paragraph) => {
         const page = {
@@ -50,7 +39,12 @@ const Page = observer(() => {
           paragraph: paragraph
         }
         book.push(page);
-        book.push(paragraph.image);
+        if (paragraph.image) {
+          book.push(paragraph.image);
+        } else {
+          book.push(paragraph.image_url);
+
+        }
       });
 
     }

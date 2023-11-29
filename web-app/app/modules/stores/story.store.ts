@@ -21,25 +21,16 @@ export const StoryStore = types
         storyId: '',
         prompt: '',
         urlImage: '',
-        heroName: 'Emilie',
+        heroName: '',
         language: 'en',
         story: null,
-        status: ''
+        status: '',
+        style: ''
       };
       self.stories = cast([]);
     },
     setStory(story: any) {
-      console.log("s", story);
       self.story.story = cast([]);
-      // const newStory = {
-      //   storyId: story.storyId,
-      //   heroName: story.heroName,
-      //   language: story.language,
-      //   prompt: story.prompt,
-      //   story: story.story,
-      //   status: story.status || "",
-      //   urlImage: story.urlImage || ""
-      // }
       const newStory = {
         ...self.story,
         storyId: story.storyId,
@@ -86,6 +77,7 @@ export const StoryStore = types
       }
     }),
     getStoryById: flow(function* (id: string, uidUser: string) {
+
       const docRef = doc(db, "Users", uidUser, "Stories", id);
       const docSnap = yield getDoc(docRef);
       if (docSnap.exists()) {
@@ -131,6 +123,14 @@ export const StoryStore = types
       }
       self.story = newStory;
     },
+    setLanguage(language: string) {
+      
+      const newStory = {
+        ...self.story,
+        language
+      }
+      self.story = newStory;
+    },
     setUrlImageStory(urlImage: string) {
       const newStory = {
         ...self.story,
@@ -140,7 +140,6 @@ export const StoryStore = types
     },
     uploadProfilImage: flow(function* (file: any, userId: string) {
       //Send to storage
-
       const storageRef = ref(storage, `images/${userId}/userImages/${file.name}`);
       const result = yield uploadBytes(storageRef, file).then((snapshot) => {
         return snapshot;
@@ -157,7 +156,7 @@ export const StoryStore = types
         if (user) {
           const uidUser = user.uid;
           const docRef = doc(db, "Users", uidUser);
-          const writeResult = yield addDoc(collection(docRef, "Stories"), {
+          const writeResult:any = yield addDoc(collection(docRef, "Stories"), {
             story_idea: self.story.prompt,
             urlImage: self.story.urlImage,
             hero_name: self.story.heroName,
@@ -205,19 +204,19 @@ export const storyStore = StoryStore.create({
     heroName: '',
     language: 'en',
     story: [],
-    status: ''
+    status: '',
+    style: ''
   },
   stories: []
 });
 
 let hydrate;
 
-if (typeof window !== 'undefined') {
   hydrate = create({
     storage: localStorage,
-    jsonify: false, // Laisser le JSON.stringify à l'utilisateur
+    jsonify: true, // Laisser le JSON.stringify à l'utilisateur
   });
-}
+
 
 // Indiquer quelles parties du store vous souhaitez persister
 if (hydrate) {
