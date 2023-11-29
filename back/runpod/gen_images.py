@@ -103,7 +103,7 @@ def generate_base_picture( image, style):
 def generate_picture(image, image_desc):
     prompt = f"{image_desc}"
     images = ip_model.generate(pil_image=image, num_samples=1, num_inference_steps=35,
-                           prompt=prompt, scale=0.7)
+                           prompt=prompt, scale=0.5)
     return images[0]
 
 
