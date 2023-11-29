@@ -19,7 +19,7 @@ const Page = observer(() => {
 
   useEffect(() => {
     console.log("ss", storyStore.story.status);
-    storyStore.getStoryById(demoUserId, demoStoryId);
+    storyStore.getStoryById(demoStoryId, demoUserId);
 
     // if (storyStore.story.status != 'done') storyStore.startListening(uidUser);
     //   const fetchData = async () => {
