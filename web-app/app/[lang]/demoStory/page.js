@@ -14,8 +14,8 @@ const Page = observer(() => {
   const [isEnd, setIsEnd] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const demoUserId = "test_user";
-  const demoStoryId = "test_story19";
+  const demoUserId = "2lMgGYvewOS0ipWhUNos2CXf3iw2";
+  const demoStoryId = "C0i8n5LhbfRX6bng7at9";
 
   useEffect(() => {
     console.log("ss", storyStore.story.status);
