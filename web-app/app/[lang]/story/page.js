@@ -22,21 +22,9 @@ const Page = observer(() => {
   const [isEnd, setIsEnd] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const searchParams = useSearchParams()
 
   useEffect(() => {
     console.log(storyStore.story);
-
-    // if sharedStoryId in url, get the story from the shared stories collection
-    if (searchParams.get('sharedStoryId')) {
-      db.collection('SharedStories').doc(searchParams.get('sharedStoryId')).get().then((doc) => {
-        if (doc.exists) {
-          storyStore.setStory(doc.data());
-        } else {
-          console.log("No such document!");
-        }
-      })
-    }
     if (storyStore.story.status != 'done') storyStore.startListening(uidUser);
 
   }, []);
@@ -80,21 +68,6 @@ const Page = observer(() => {
           height={650}
           size={'fixed'}
         >
-          <div>
-            {!searchParams.get('sharedStoryId') &&
-
-              <Button variant="contained" color="primary" onClick={() => {
-                const shareStory = functions.httpsCallable('shareStory');
-                shareStory({ userId: uidUser, storyId: storyStore.story.id }).then((result) => {
-                  console.log(result.data);
-                });
-              }
-              }>
-                Share this story
-              </Button>
-            }
-
-          </div>
           <div className='text-black bg-white'>{storyStore.story.prompt}</div>
           {pages.map((story, index) => {
             return (
