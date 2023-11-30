@@ -22,7 +22,7 @@ export const StoryStore = types
         prompt: '',
         urlImage: '',
         heroName: '',
-        language: '',
+        language: 'en',
         story: null,
         status: '',
         style: ''
