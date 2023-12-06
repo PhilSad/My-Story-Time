@@ -10,6 +10,7 @@ export const StoryModel = types.model("StoryModel", {
   story: types.maybeNull(types.array(types.frozen<GeneratedStoryModelType>())),
   status: types.maybeNull(types.string),
   style: types.maybeNull(types.string),
+  poster: types.maybeNull(types.string),
 });
 
 export type StoryModelType = Instance<typeof StoryModel>;

@@ -25,7 +25,8 @@ export const StoryStore = types
         language: 'en',
         story: null,
         status: '',
-        style: ''
+        style: '',
+        poster: ''
       };
       self.stories = cast([]);
     },
@@ -64,7 +65,9 @@ export const StoryStore = types
             prompt: storyDoc.data().story_idea,
             story: storyDoc.data().story,
             status: storyDoc.data().status,
-            urlImage: storyDoc.data().urlImage
+            urlImage: storyDoc.data().urlImage,
+            poster: storyDoc.data().poster,
+
           }
           vide.push(newStory);
           console.log('Story ID:', storyDoc.id, 'Data:', storyDoc.data());
@@ -88,6 +91,8 @@ export const StoryStore = types
           story: docSnap.data().story,
           status: docSnap.data().status,
           storyId: docSnap.data().id,
+          poster: docSnap.data().poster,
+
         }
 
         self.story = newStory;

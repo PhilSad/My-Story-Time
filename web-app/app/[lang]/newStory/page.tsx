@@ -27,7 +27,6 @@ const Page = observer(() => {
 
   const handleLanguageChange = (event: { target: { value: any; }; }) => {
     const selectedValue = event.target.value;
-    // Mettez à jour l'état avec la nouvelle valeur sélectionnée
     setSelectedLanguage(selectedValue);
   };
 
@@ -37,7 +36,7 @@ const Page = observer(() => {
         <h1 className='text-5xl text-center text-white'>My Bedtime Story</h1>
       </div>
       <div className="flex flex-row ">
-        <div className='flex grid content-center w-full mx-5 space-y-10 lg:mx-48 md:mx-28'>
+        <div className='flex grid content-center w-full mx-5 space-y-5 lg:mx-48 md:mx-28'>
           <div className='text-3xl text-white'>What's the story about</div>
           <input type="text" value={promptInput} placeholder="A pirate lost his parrot" className="w-full input input-bordered" onChange={(e) => setInputPrompt(e.target.value)} />
           <label className="w-full form-control">
@@ -54,10 +53,10 @@ const Page = observer(() => {
           </label>
           <select
             className="w-full max-w-xs select select-bordered"
-            onChange={handleLanguageChange} // Ajoutez le gestionnaire d'événements onChange
-            value={selectedLanguage} // Définissez la valeur actuelle du select sur l'état
+            onChange={handleLanguageChange} 
+            value={selectedLanguage}
           >
-            <option disabled value="" selected>
+            <option disabled>
               Choose a language
             </option>
             <option value="fr">French</option>
